@@ -1,0 +1,68 @@
+.card-wrapper {
+    max-width: 1100px;
+    margin: 0 60px 35px;
+    padding: 20px 10px;
+    overflow: hidden;
+}
+
+.card-list .card-item {
+    list-style: none;
+}
+
+
+.card-list .card-item .card-link-active {
+    cursor: grabbing;
+}
+
+.card-list .card-link .card-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+
+.card-wrapper .swiper-pagination-bullet {
+    height: 13px;
+    width: 13px;
+    opacity: 0.5;
+    background: #182865;
+}
+
+.card-wrapper .swiper-pagination-bullet-active {
+    opacity: 1;
+}
+
+.card-wrapper .swiper-slide-button {
+    color: rgb(31, 41, 55);
+    margin-top: -35px;
+}
+
+@media screen and (max-width: 768px) {
+    .card-wrapper {
+        margin: 0 10px 25px;
+    }
+
+    .card-wrapper .swiper-slide-button {
+        display: none;
+    }
+}
+
+/* Add styles to center the carousel for screens wider than 1288px */
+@media (min-width: 1288px) {
+    .swiper {
+        max-width: 1200px;
+        /* Adjust the width as needed */
+        margin: 0 auto;
+        /* Center the carousel */
+    }
+
+    .card-wrapper {
+        display: flex;
+        justify-content: center;
+        /* Center the cards */
+    }
+
+    .card-item {
+        margin: 0 10px;
+        /* Add spacing between cards */
+    }
+}
