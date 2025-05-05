@@ -41,22 +41,43 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                     </svg>
-                    <span
-                        class="px-1.5 rounded-full absolute bg-white -top-1 -right-2 z-30 text-[0.7rem] text-gray-800 border border-gray-200 shadow-sm">3</span>
+                    @if (Auth::check())
+                        <span
+                            class="px-1.5 rounded-full absolute bg-white -top-1 -right-2 z-30 text-[0.7rem] text-gray-800 border border-gray-200 shadow-sm">3</span>
+                    @endif
                 </a>
                 <div class="relative ml-3" x-data="{ open: false }">
-                    <button @click="open = !open" type="button"
-                        class="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-none">
-                        <img width="33" height="33"
-                            src="https://img.icons8.com/fluency-systems-filled/48/FFFFFF/user.png" alt="user" />
-                        <p class="text-gray-50 pt-1.5 pl-1 hidden sm:block">Ceritanya</p>
-                    </button>
+                    @if (Auth::check())
+                        <button @click="open = !open" type="button"
+                            class="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-none">
+                            <img src="{{ asset('storage/' . Auth::user()->img) }}" alt="user"
+                                class="w-[33px] h-[33px] object-cover rounded-full" />
+
+                            <p class="text-gray-50 pt-1.5 pl-1 hidden sm:block">{{ Auth::user()->name }}</p>
+                        </button>
+                    @else
+                        <button @click="open = !open" type="button"
+                            class="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-none">
+                            <img width="33" height="33" src="{{ asset('assets/profile/Profile.jpg') }}"
+                                alt="user" style="border-radius: 50%" />
+                        </button>
+                    @endif
                     <div x-show="open" @click.outside="open = false"
                         class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none">
                         <a href="{{ url('/order-history') }}" class="block px-4 py-2 text-sm text-gray-700">Order
                             History</a>
-                        <a href="{{ url('/settings') }}" class="block px-4 py-2 text-sm text-gray-700">Settings</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700">Sign out</a>
+                        @if (Auth::check())
+                            <a href="{{ url('/settings/' . Auth::user()->id) }}"
+                                class="block px-4 py-2 text-sm text-gray-700">Settings</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700" id="showAlert">Logout</a>
+                            <form id="logout-form" action="{{ route('index.logout') }}" method="POST"
+                                style="display: none;">
+                                @csrf
+                            </form>
+                        @else
+                            <a href="{{ url('/settings') }}" class="block px-4 py-2 text-sm text-gray-700">Settings</a>
+                            <a href="{{ url('/login') }}" class="block px-4 py-2 text-sm text-gray-700">Sign In</a>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -183,7 +183,7 @@
 
                             <dl class="flex items-center justify-between gap-4">
                                 <dt class="text-base font-normal text-gray-500">Savings</dt>
-                                <dd class="text-base font-medium text-green-600">-$299.00</dd>
+                                <dd class="text-base font-medium text-blue-600">-$299.00</dd>
                             </dl>
 
                             <dl class="flex items-center justify-between gap-4">
@@ -489,6 +489,31 @@
             </div>
             <form class="flex flex-col">
                 <div class="custom-scrollbar h-[450px] overflow-y-auto px-2">
+                    <div class="items-center justify-center">
+                        <div class="w-full max-w-xl">
+                            <label class="mb-1.5 block text-sm font-medium text-gray-700">
+                                Foto Profile
+                            </label>
+                            <label for="file-upload"
+                                class="block cursor-pointer hover:border-blue-700 border-1 border-dashed rounded-xl bg-white p-10 text-center hover:bg-blue-50 transition">
+                                <div class="flex flex-col items-center space-y-4">
+                                    <div class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
+                                        <svg class="fill-current" width="29" height="28" viewBox="0 0 29 28"
+                                            fill="none">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M14.5 3.917a.75.75 0 0 0-.548.239L8.574 9.532a.75.75 0 0 0 1.06 1.061l4.118-4.116v12.19a.75.75 0 0 0 1.5 0V6.482l4.113 4.111a.75.75 0 0 0 1.06-1.06L15.084 4.194A.75.75 0 0 0 14.5 3.917ZM5.916 18.667a.75.75 0 0 0-1.5 0v3.167A2.25 2.25 0 0 0 6.666 24.084h15.667a2.25 2.25 0 0 0 2.25-2.25v-3.167a.75.75 0 0 0-1.5 0v3.167a.75.75 0 0 1-.75.75H6.666a.75.75 0 0 1-.75-.75v-3.167Z" />
+                                        </svg>
+                                    </div>
+                                    <p class="text-lg font-semibold text-gray-700">Drag & Drop File Here</p>
+                                    <p class="text-sm text-gray-500">Drag and drop your PNG, JPG, WebP, SVG images here
+                                        or browse</p>
+                                    <p class="text-blue-600 underline text-sm">Browse File</p>
+                                </div>
+                                <input id="file-upload" type="file" accept=".png,.jpg,.jpeg,.webp,.svg"
+                                    class="hidden" />
+                            </label>
+                        </div>
+                    </div>
                     <div>
                         <h5 class="mb-5 text-lg font-medium text-gray-800 lg:mb-6">
                             Social Links
@@ -892,5 +917,104 @@
                 </div>
             @endforeach
         </div>
+    </div>
+</div>
+
+
+
+<div class="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-3xl font-bold mb-6 text-center">Lupa Password</h2>
+
+        <form method="POST" action="#">
+            @csrf
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-semibold mb-2">Email</label>
+                <input type="email" name="email"
+                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+            </div>
+
+            <button type="submit"
+                class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 font-semibold transition duration-300">
+                Submit
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-3xl font-bold mb-6 text-center">OTP Verification</h2>
+
+        @if (session('error'))
+            <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{{ session('error') }}</span>
+            </div>
+        @endif
+
+        {{-- @if (session('status'))
+            <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                role="alert">
+                <span class="block sm:inline">{{ session('status') }}</span>
+            </div>
+        @endif --}}
+
+        {{-- @if (session('otp.resend'))
+            <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                role="alert">
+                <span class="block sm:inline">{{ session('status') }}</span>
+            </div>
+        @endif --}}
+
+        <form method="POST" action="#">
+            @csrf
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-semibold mb-2">Enter OTP</label>
+                <input type="text" name="otp" inputmode="numeric" pattern="[0-9]*"
+                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required
+                    placeholder="Enter 6-digit code" maxlength="6" autofocus>
+                {{-- @error('otp')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror --}}
+            </div>
+
+            <button type="submit"
+                class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 font-semibold transition duration-300">
+                Verify OTP
+            </button>
+        </form>
+
+        <div class="mt-4 text-center">
+            <form method="POST" action="#">
+                @csrf
+                <button type="submit" class="text-blue-500 hover:text-blue-700 font-medium">
+                    Resend OTP
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-xl">
+        <h2 class="text-xl font-semibold mb-4">Dropzone</h2>
+
+        <label for="file-upload"
+            class="block cursor-pointer hover:border-blue-700 hover:border-1 hover:border-dashed rounded-xl bg-white p-10 text-center hover:bg-blue-50 transition">
+            <div class="flex flex-col items-center space-y-4">
+                <div class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
+                    <svg class="fill-current" width="29" height="28" viewBox="0 0 29 28" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M14.5 3.917a.75.75 0 0 0-.548.239L8.574 9.532a.75.75 0 0 0 1.06 1.061l4.118-4.116v12.19a.75.75 0 0 0 1.5 0V6.482l4.113 4.111a.75.75 0 0 0 1.06-1.06L15.084 4.194A.75.75 0 0 0 14.5 3.917ZM5.916 18.667a.75.75 0 0 0-1.5 0v3.167A2.25 2.25 0 0 0 6.666 24.084h15.667a2.25 2.25 0 0 0 2.25-2.25v-3.167a.75.75 0 0 0-1.5 0v3.167a.75.75 0 0 1-.75.75H6.666a.75.75 0 0 1-.75-.75v-3.167Z" />
+                    </svg>
+                </div>
+                <p class="text-lg font-semibold text-gray-700">Drag & Drop File Here</p>
+                <p class="text-sm text-gray-500">Drag and drop your PNG, JPG, WebP, SVG images here or browse</p>
+                <p class="text-blue-600 underline text-sm">Browse File</p>
+            </div>
+            <input id="file-upload" type="file" accept=".png,.jpg,.jpeg,.webp,.svg" class="hidden" />
+        </label>
     </div>
 </div>
