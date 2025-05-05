@@ -1,4 +1,5 @@
-<x-user-components.layout>
+<x-layout>
+    <x-user-components.navbar></x-user-components.navbar>
     <section class="bg-white py-4 antialiased md:py-8">
         <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
             <h2 class="text-xl font-semibold text-gray-900 sm:text-2xl">Shopping Cart</h2>
@@ -157,4 +158,4 @@
         </div>
     </section>
 
-</x-user-components.layout>
+</x-layout>

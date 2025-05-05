@@ -1,4 +1,5 @@
-<x-user-components.layout>
+<x-layout>
+    <x-user-components.navbar></x-user-components.navbar>
     <div class="bg-white mt-8">
         <h2 class="text-3xl font-bold text-gray-800 text-center justify-center">List of Our Products </h2>
         <p class="text-gray-600 mt-2 text-center justify-center px-4">Details to details is what makes Hexashop
@@ -203,4 +204,4 @@
             </ul>
         </nav>
     </div>
-</x-user-components.layout>
+</x-layout>

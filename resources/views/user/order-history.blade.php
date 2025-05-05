@@ -1,4 +1,5 @@
-<x-user-components.layout>
+<x-layout>
+    <x-user-components.navbar></x-user-components.navbar>
     {{-- Order Progress Start --}}
     <div class="container mx-auto px-4 py-8 max-w-7xl">
         <div class="flex justify-between items-center mb-8">
@@ -349,4 +350,4 @@
         </div>
     </div>
     {{-- Order history end --}}
-</x-user-components.layout>
+    </x-user-components.layout>

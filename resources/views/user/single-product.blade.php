@@ -1,4 +1,5 @@
-<x-user-components.layout>
+<x-layout>
+    <x-user-components.navbar></x-user-components.navbar>
     <nav aria-label="Breadcrumb">
         <ol role="list" class="mx-auto flex max-w-2xl items-center space-x-2 px-4 pt-4 sm:px-6 lg:max-w-7xl lg:px-8">
             <li>
@@ -316,4 +317,4 @@
             });
         });
     </script>
-</x-user-components.layout>
+</x-layout>

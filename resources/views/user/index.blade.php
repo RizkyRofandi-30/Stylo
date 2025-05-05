@@ -1,4 +1,5 @@
-<x-user-components.layout>
+<x-layout>
+    <x-user-components.navbar></x-user-components.navbar>
     <x-user-components.banner></x-user-components.banner>
     <x-user-components.men-section></x-user-components.men-section>
     <x-user-components.women-section></x-user-components.women-section>
@@ -6,4 +7,4 @@
     <x-user-components.accessories-section></x-user-components.accessories-section>
     <x-user-components.explore></x-user-components.explore>
     <x-user-components.footer></x-user-components.footer>
-</x-user-components.layout>
+</x-layout>
