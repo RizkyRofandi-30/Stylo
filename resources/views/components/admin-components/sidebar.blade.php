@@ -16,26 +16,16 @@
             <x-logo href="#" class="items-center"></x-logo>
         </div>
 
-        <nav class="mt-6 flex-1">
-            <a href="#"
+        <nav class="mt-2 flex-1">
+            <a href="/admin"
                 class="px-4 py-3 flex items-center space-x-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">
                 <i data-lucide="home" class="w-5 h-5"></i>
                 <span>Home</span>
             </a>
-            <a href="#"
-                class="px-4 py-3 flex items-center space-x-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">
-                <i data-lucide="user" class="w-5 h-5"></i>
-                <span>Profile</span>
-            </a>
-            <a href="#"
+            <a href="/package"
                 class="px-4 py-3 flex items-center space-x-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">
                 <i data-lucide="mail" class="w-5 h-5"></i>
-                <span>Messages</span>
-            </a>
-            <a href="#"
-                class="px-4 py-3 flex items-center space-x-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">
-                <i data-lucide="settings" class="w-5 h-5"></i>
-                <span>Settings</span>
+                <span>Paket User</span>
             </a>
         </nav>
 
@@ -63,7 +53,7 @@
                 </button>
             </div>
         </div>
-        <x-admin-components.home-content></x-admin-components.home-content>
+        {{ $slot }}
     </div>
 </div>
 

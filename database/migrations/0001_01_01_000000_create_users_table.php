@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Enums\Role;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -13,9 +14,19 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('img')->nullable();
             $table->string('name');
             $table->string('email')->unique();
+
+            $table->enum('role', [
+                Role::User->value,
+                Role::Admin->value
+            ])->default(Role::User->value);;
+
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('phone', 15)->nullable();
+            $table->string('address')->nullable();
+            $table->string('postal_code', 10)->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

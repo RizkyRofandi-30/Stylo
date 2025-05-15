@@ -1,5 +1,4 @@
 {{-- @props(['id' => '']) --}}
 <a {{ $attributes }}>
-    <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-        alt="Your Company" />
+    <img class="h-8 w-auto" src={{ asset('assets/logo/Dark_Themes.png') }} alt="Your Company" />
 </a>

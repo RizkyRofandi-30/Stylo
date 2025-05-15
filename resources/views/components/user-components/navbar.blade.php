@@ -50,18 +50,24 @@
                     @if (Auth::check())
                         <button @click="open = !open" type="button"
                             class="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-none">
-                            <img src="{{ asset('storage/' . Auth::user()->img) }}" alt="user"
-                                class="w-[33px] h-[33px] object-cover rounded-full" />
+
+                            @if (Auth::user()->img && Storage::disk('public')->exists(Auth::user()->img))
+                                <img src="{{ asset('storage/' . Auth::user()->img) }}" alt="user"
+                                    class="w-[33px] h-[33px] object-cover rounded-full" />
+                            @else
+                                <img width="33" height="33" src="{{ asset('assets/profile/Profile.jpg') }}" alt="default user"
+                                    class="rounded-full" />
+                            @endif
 
                             <p class="text-gray-50 pt-1.5 pl-1 hidden sm:block">{{ Auth::user()->name }}</p>
                         </button>
                     @else
                         <button @click="open = !open" type="button"
                             class="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-none">
-                            <img width="33" height="33" src="{{ asset('assets/profile/Profile.jpg') }}"
-                                alt="user" style="border-radius: 50%" />
+                            <img width="33" height="33" src="{{ asset('assets/profile/Profile.jpg') }}" alt="guest user" class="rounded-full" />
                         </button>
                     @endif
+
                     <div x-show="open" @click.outside="open = false"
                         class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none">
                         <a href="{{ url('/order-history') }}" class="block px-4 py-2 text-sm text-gray-700">Order
