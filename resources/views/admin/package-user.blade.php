@@ -305,8 +305,8 @@
                     </div>
                 </div>
             </div>
-
             {{-- End Delete Modal --}}
+            
             <nav aria-label="Page navigation example" class="mt-4">
                 <ul class="flex items-center -space-x-px h-10 text-base text-center justify-center ">
                     <li>

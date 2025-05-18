@@ -47,7 +47,7 @@
                         <!-- Text -->
                         <div>
                             <h2 class="text-lg font-semibold text-gray-800">Total Item</h2>
-                            <p class="text-3xl font-bold text-gray-900">24.780</p>
+                            <p class="text-3xl font-bold text-gray-900">{{ count($products) }}</p>
                             <p class="text-sm text-gray-500 mt-1">Compared to $22,032 last month</p>
                         </div>
                     </div>
@@ -94,7 +94,6 @@
                             Add Product
                         </button>
                     </div>
-
                 </div>
                 <div class="w-full">
                     <table class="w-full text-left table-auto min-w-max ">
@@ -102,9 +101,6 @@
                             <tr>
                                 <th class="p-4 border-b border-slate-300 bg-slate-50">
                                     <p class="block text-sm font-normal leading-none text-slate-500">Product</p>
-                                </th>
-                                <th class="p-4 border-b border-slate-300 bg-slate-50">
-                                    <p class="block text-sm font-normal leading-none text-slate-500">Total Qty</p>
                                 </th>
                                 <th class="p-4 border-b border-slate-300 bg-slate-50">
                                     <p class="block text-sm font-normal leading-none text-slate-500">Kategori</p>
@@ -115,191 +111,116 @@
                                 <th class="p-4 border-b border-slate-300 bg-slate-50">
                                     <p class="block text-sm font-normal leading-none text-slate-500">Size</p>
                                 </th>
+                                <th class="p-4 border-b border-slate-300 bg-slate-50">
+                                    <p class="block text-sm font-normal leading-none text-slate-500">Action</p>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Team Members Rows (unchanged) -->
-                            <!-- ... same rows as before ... -->
-                            <tr class="hover:bg-slate-50">
-                                <td class="p-2 border-b border-slate-200">
-                                    <div class="flex items-center space-x-2">
-                                        <img width="33" height="33"
-                                            src="{{ asset('assets/images/accessories-04.jpeg') }}" alt="user"
-                                            class="w-[45px] h-[45px] object-cover rounded-full" />
-                                        <div class="text-sm leading-tight">
-                                            <p class="m-0 font-bold">Salam rek</p>
-                                            <p class="m-0">Price: </p>
+                            @foreach ($products as $product)
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-2 border-b border-slate-200">
+                                        <div class="flex items-center space-x-2">
+                                            <img width="33" height="33" src="{{ asset('storage/' . $product->product_img) }}" alt="product"
+                                                class="w-[45px] h-[45px] object-cover rounded-full" />
+                                            <div class="text-sm leading-tight">
+                                                <p class="m-0 font-bold">{{ $product->product_name }}</p>
+                                                <p class="m-0">Price: Rp {{ number_format($product->product_price, 0, ',', '.') }}
+                                                </p>
+                                                <p class="m-0">Total qty:</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
 
-                                <td class="p-4 border-b border-slate-200">
-                                    <p class="block text-sm text-slate-800">Manager</p>
-                                </td>
-                                <td class="p-4 border-b border-slate-200">
-                                    <p class="block text-sm text-slate-800">john.michael@example.com</p>
-                                </td>
-                                <td class="p-4 border-b border-slate-200 break-words whitespace-normal">
-                                    <p
+                                    <td class="p-4 border-b border-slate-200 ">
+                                        <p class="block text-sm text-slate-800">{{ $product->category }}</p>
+                                    </td>
+                                    <td class="p-4 border-b border-slate-200 break-words whitespace-normal">
+                                        <p
                                         class="block text-sm text-slate-800 overflow-hidden text-ellipsis whitespace-nowrap max-w-[200px]">
-                                        Lorem ipsum dolor sit, amet consectetur adipisicing
-                                        elit. Minima, nihil. Blanditiis magni nisi, sapiente, consequuntur alias,
-                                        dolorum
-                                        laborum accusantium eos voluptate perspiciatis explicabo. Placeat reprehenderit
-                                        laudantium dicta, vero sunt perferendis.</p>
-                                </td>
-                                <td class="p-4 align-top border-b border-slate-200">
-                                    <div class="space-y-3">
-                                        <!-- Size Buttons -->
-                                        <div class="flex flex-wrap gap-2">
-                                            <a href="#size-s"
-                                                class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
-                                                S
-                                            </a>
-                                            <a href="#size-m"
-                                                class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
-                                                M
-                                            </a>
-                                            <a href="#size-l"
-                                                class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
-                                                L
-                                            </a>
-                                            <a href="#size-xl"
-                                                class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
-                                                XL
-                                            </a>
-                                            <a href="#size-xxl"
-                                                class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
-                                                XXL
-                                            </a>
-                                        </div>
+                                        {{ $product->product_desc }}</p>
+                                    </td>
+                                    <td class="p-4 align-top border-b border-slate-200">
+                                        <div class="space-y-3">
+                                            <!-- Size Buttons -->
+                                            <div class="flex flex-wrap gap-2">
+                                                <a href="#size-s"
+                                                    class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
+                                                    S
+                                                </a>
+                                                <a href="#size-m"
+                                                    class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
+                                                    M
+                                                </a>
+                                                <a href="#size-l"
+                                                    class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
+                                                            L
+                                                </a>
+                                                <a href="#size-xl"
+                                                    class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
+                                                    XL
+                                                </a>
+                                                <a href="#size-xxl"
+                                                    class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
+                                                    XXL
+                                                </a>
+                                            </div>
 
-                                        <!-- Quantity for Size S (can duplicate for others if needed) -->
-                                        <div id="size-s" class="p-2 border rounded bg-slate-50">
-                                            <h3 class="text-sm font-semibold text-slate-700">Size: S</h3>
-                                            <p class="text-xs text-slate-600">Quantity Available: 10</p>
+                                            <!-- Quantity for Size S (can duplicate for others if needed) -->
+                                            <div id="size-s" class="p-2 border rounded bg-slate-50 flex justify-between items-center">
+                                                <h3 class="text-sm font-semibold text-slate-700">Size: S</h3>
+                                                <p class="text-xs text-slate-600">Quantity Available: 10</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-slate-50">
-                                <td class="p-2 border-b border-slate-200">
-                                    <div class="flex items-center space-x-2">
-                                        <img width="33" height="33"
-                                            src="{{ asset('assets/images/kid-02.jpg') }}" alt="user"
-                                            class="w-[45px] h-[45px] object-cover rounded-full" />
-                                        <div class="text-sm leading-tight">
-                                            <p class="m-0 font-bold">Nama Produk</p>
-                                            <p class="m-0">Price: </p>
+                                    </td>
+                                    <td class="p-4 border-b border-slate-200 text-center">
+                                        <button data-modal-target="popup-modal-{{ $product->product_id }}" data-modal-toggle="popup-modal-{{ $product->product_id }}"
+                                            class="inline-block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 mx-0.5"
+                                            type="button">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                                {{-- Start Delete Modal --}}
+                                <div id="popup-modal-{{ $product->product_id }}" tabindex="-1"
+                                    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                    <div class="relative p-4 w-full max-w-md max-h-full">
+                                        <div class="relative bg-white rounded-lg shadow-sm">
+                                            <button type="button"
+                                                class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                                                data-modal-hide="popup-modal-{{ $product->product_id }}">
+                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 14 14">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                                </svg>
+                                                <span class="sr-only">Close modal</span>
+                                            </button>
+                                            <div class="p-4 md:p-5 text-center">
+                                                <form action="{{ route('admin.delete_product', $product->product_id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <svg class="mx-auto mb-4 text-gray-400 w-12 h-12" aria-hidden="true"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                    </svg>
+                                                    <h3 class="mb-5 text-lg font-normal text-gray-500">Apakah Anda ingin Menghapus Produk ini?</h3>
+                                                    <button data-modal-hide="popup-modal-{{ $product->product_id }}" type="button"
+                                                        class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-gray-700">
+                                                        Tidak
+                                                    </button>
+                                                    <button type="submit"
+                                                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5">
+                                                        Hapus
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-
-                                <td class="p-4 border-b border-slate-200">
-                                    <p class="block text-sm text-slate-800">Developer</p>
-                                </td>
-                                <td class="p-4 border-b border-slate-200">
-                                    <p class="block text-sm text-slate-800">alexa.liras@example.com</p>
-                                </td>
-                                <td class="p-4 border-b border-slate-200 break-words whitespace-normal">
-                                    <p
-                                        class="block text-sm text-slate-800 overflow-hidden text-ellipsis whitespace-nowrap max-w-[200px]">
-                                        Lorem ipsum dolor sit, amet consectetur adipisicing
-                                        elit. Minima, nihil. Blanditiis magni nisi, sapiente, consequuntur alias,
-                                        dolorum
-                                        laborum accusantium eos voluptate perspiciatis explicabo. Placeat reprehenderit
-                                        laudantium dicta, vero sunt perferendis.</p>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-slate-50">
-                                <td class="p-2 border-b border-slate-200">
-                                    <div class="flex items-center space-x-2">
-                                        <img width="33" height="33"
-                                            src="{{ asset('assets/images/kid-01.jpg') }}" alt="user"
-                                            class="w-[45px] h-[45px] object-cover rounded-full" />
-                                        <div class="text-sm leading-tight">
-                                            <p class="m-0 font-bold">Nama Produk</p>
-                                            <p class="m-0">Price: 12</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="p-4 border-b border-slate-200">
-                                    <p class="block text-sm text-slate-800">Executive</p>
-                                </td>
-                                <td class="p-4 border-b border-slate-200">
-                                    <p class="block text-sm text-slate-800">laurent.perrier@example.com</p>
-                                </td>
-                                <td class="p-4 border-b border-slate-200 break-words whitespace-normal">
-                                    <p
-                                        class="block text-sm text-slate-800 overflow-hidden text-ellipsis whitespace-nowrap max-w-[200px]">
-                                        Lorem ipsum dolor sit, amet consectetur adipisicing
-                                        elit. Minima, nihil. Blanditiis magni nisi, sapiente, consequuntur alias,
-                                        dolorum
-                                        laborum accusantium eos voluptate perspiciatis explicabo. Placeat reprehenderit
-                                        laudantium dicta, vero sunt perferendis.</p>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-slate-50">
-                                <td class="p-2 border-b border-slate-200">
-                                    <div class="flex items-center space-x-2">
-                                        <img width="33" height="33"
-                                            src="{{ asset('assets/images/kid-03.jpg') }}" alt="user"
-                                            class="w-[45px] h-[45px] object-cover rounded-full" />
-                                        <div class="text-sm leading-tight">
-                                            <p class="m-0 font-bold">Nama Produk</p>
-                                            <p class="m-0">Price:</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="p-4 border-b border-slate-200">
-                                    <p class="block text-sm text-slate-800">Developer</p>
-                                </td>
-                                <td class="p-4 border-b border-slate-200">
-                                    <p class="block text-sm text-slate-800">michael.levi@example.com</p>
-                                </td>
-                                <td class="p-4 border-b border-slate-200 break-words whitespace-normal">
-                                    <p
-                                        class="block text-sm text-slate-800 overflow-hidden text-ellipsis whitespace-nowrap max-w-[200px]">
-                                        Lorem ipsum dolor sit, amet consectetur adipisicing
-                                        elit. Minima, nihil. Blanditiis magni nisi, sapiente, consequuntur alias,
-                                        dolorum
-                                        laborum accusantium eos voluptate perspiciatis explicabo. Placeat reprehenderit
-                                        laudantium dicta, vero sunt perferendis.</p>
-                                </td>
-                                <td class="p-4 align-top border-b border-slate-200">
-                                    <div class="space-y-3">
-                                        <!-- Size Buttons -->
-                                        <div class="flex flex-wrap gap-2">
-                                            <a href="#size-s"
-                                                class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
-                                                S
-                                            </a>
-                                            <a href="#size-m"
-                                                class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
-                                                M
-                                            </a>
-                                            <a href="#size-l"
-                                                class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
-                                                L
-                                            </a>
-                                            <a href="#size-xl"
-                                                class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
-                                                XL
-                                            </a>
-                                            <a href="#size-xxl"
-                                                class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
-                                                XXL
-                                            </a>
-                                        </div>
-
-                                        <!-- Quantity for Size S (can duplicate for others if needed) -->
-                                        <div id="size-s" class="p-2 border rounded bg-slate-50">
-                                            <h3 class="text-sm font-semibold text-slate-700">Size: S</h3>
-                                            <p class="text-xs text-slate-600">Quantity Available: 10</p>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </div>                          
+                                </div>
+                                {{-- End Delete Modal --}}
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -376,17 +297,20 @@
                     </div>
                     {{-- Erorr message --}}
                     @if (session('isProductInfoModal'))
-                        <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-                            role="alert">
+                        <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
                             <ul class="list-disc list-inside text-sm">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
+                                @foreach ($errors->all() as $index => $error)
+                                    @if ($index < 3)
+                                        <li>{{ $error }}</li>
+                                    @elseif ($index === 3)
+                                        <li>...</li>
+                                        @break
+                                    @endif
                                 @endforeach
                             </ul>
                         </div>
                     @endif
-                    <form class="flex flex-col" method="POST">
-                        {{--  action="{{ route('settings.update', Auth::user()->id) }}" enctype="multipart/form-data" --}}
+                    <form class="flex flex-col" method="POST" action="{{ route('admin.add_product') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="custom-scrollbar h-[450px] overflow-y-auto px-2">
@@ -395,7 +319,7 @@
                                     <label class="mb-1.5 block text-sm font-medium text-gray-700">
                                         Foto Produk
                                     </label>
-                                    <label for="img_profile"
+                                    <label for="product_img"
                                         class="block cursor-pointer hover:border-blue-700 border-1 border-dashed rounded-xl bg-white p-10 text-center hover:bg-blue-50 transition">
                                         <div class="flex flex-col items-center space-y-4">
                                             <div
@@ -412,7 +336,7 @@
                                                 or browse</p>
                                             <p class="text-blue-600 underline text-sm">Browse File</p>
                                         </div>
-                                        <input id="img_profile" name="img_profile" type="file"
+                                        <input id="product_img" name="product_img" type="file"
                                             accept=".png,.jpg,.jpeg,.svg" class="hidden" />
                                     </label>
                                 </div>
@@ -423,16 +347,15 @@
                                     <label class="mb-1.5 block text-sm font-medium text-gray-700">
                                         Nama Produk
                                     </label>
-                                    <input type="text" name="text" placeholder="Masukan nama produk"
+                                    <input type="text" name="product_name" placeholder="Masukan nama produk"
                                         class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-600 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10" />
-                                    {{-- {{ Auth::user()->email }} --}}
                                 </div>
 
                                 <div class="col-span-2 lg:col-span-1">
                                     <label class="mb-1.5 block text-sm font-medium text-gray-700">
                                         Harga
                                     </label>
-                                    <input type="text" name="price" placeholder="Masukan nominal harga"
+                                    <input type="number" name="product_price" placeholder="Masukan nominal harga" min="100" step="10"
                                         class="dark:bg-dark-900 h-11 w-full appearance-none rounded-lg border border-gray-600 bg-transparent bg-none px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10" />
                                     {{-- {{ Auth::user()->phone }} --}}
                                 </div>  
@@ -443,7 +366,7 @@
                                     <label class="mb-1.5 block text-sm font-medium text-gray-700">
                                         Description
                                     </label>
-                                    <textarea placeholder="Enter a description..." type="text" rows="6"
+                                    <textarea placeholder="Enter a description..." type="text" rows="6" name="product_desc"
                                         class="shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden"></textarea>
                                 </div>                
                             </div>
@@ -453,15 +376,15 @@
                                 </label>
                                 <!-- Select Input with Fixed Hover Effect -->
                                 <div class="relative z-20 bg-transparent group">
-                                    <select
+                                    <select name="category" id="category"
                                         class="shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden hover:border-gray-400 transition-colors"
                                         :class="isOptionSelected && 'text-gray-800'"
                                         @change="isOptionSelected = true; optionChoosen = $event.target.value">
                                         <option value="" selected disabled>Select Option</option>
-                                        <option value="Pria">Pria</option>
-                                        <option value="Wanita">Wanita</option>
-                                        <option value="Anak-Anak">Anak-anak</option>
-                                        <option value="Aksesoris">Aksesoris</option>
+                                        <option value="Men">Men</option>
+                                        <option value="Women">Women</option>
+                                        <option value="Kid">Kid</option>
+                                        <option value="Accessories">Accessories</option>
                                     </select>
                                     <span
                                         class="pointer-events-none absolute top-1/2 right-4 z-30 -translate-y-1/2 text-gray-700 group-hover:text-gray-800 transition-colors">
@@ -474,48 +397,45 @@
                                 </div>
                             </div>
                             <div class="mt-5">
-                                <div  x-show="optionChoosen === 'Pria' || optionChoosen === 'Wanita' || optionChoosen === 'Anak-Anak'" >
-                                    <form action="#" method="POST" class="bg-white rounded-lg shadow-md p-6">
-                                        @csrf
-                                        <!-- Size and Quantity Fields -->
-                                        <div id="sizes-container">
-                                            <div class="size-group mb-4">
-                                                <div class="flex flex-wrap -mx-2">
-                                                    <div class="w-full md:w-1/3 px-2">
-                                                        <label class="block text-gray-700 font-medium mb-1">Size</label>
-                                                        <select name="sizes[0][size]" class="w-full px-3 py-2 border rounded-lg">
-                                                            <option value="" selected disabled>Select a size</option>
-                                                            <option value="XS">XS</option>
-                                                            <option value="S">S</option>
-                                                            <option value="M">M</option>
-                                                            <option value="L">L</option>
-                                                            <option value="XL">XL</option>
-                                                            <option value="XXL">XXL</option>
-                                                        </select>
-                                                    </div>
-                                    
-                                                    <div class="w-full md:w-1/3 px-2 mb-4">
-                                                        <label class="block text-gray-700 font-medium mb-1">Quantity</label>
-                                                        <input type="number" name="sizes[0][quantity]" min="0" class="w-full px-3 py-2 border rounded-lg">
-                                                    </div>
-                                                    <div class="w-full md:w-1/3 px-2 mb-4 flex items-end">
-                                                        <button type="button"
-                                                            class="remove-size bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition">
-                                                            Remove
-                                                        </button>
-                                                    </div>
+                                <div  x-show="optionChoosen === 'Men' || optionChoosen === 'Women' || optionChoosen === 'Kid'" >
+                                    <!-- Size and Quantity Fields -->
+                                    <div id="sizes-container">
+                                        <div class="size-group mb-4">
+                                            <div class="flex flex-wrap -mx-2">
+                                                <div class="w-full md:w-1/3 px-2">
+                                                    <label class="block text-gray-700 font-medium mb-1">Size</label>
+                                                    <select name="sizes[0][size]" class="w-full px-3 py-2 border rounded-lg">
+                                                        <option value="" selected disabled>Select a size</option>
+                                                        <option value="XS">XS</option>
+                                                        <option value="S">S</option>
+                                                        <option value="M">M</option>
+                                                        <option value="L">L</option>
+                                                        <option value="XL">XL</option>
+                                                        <option value="XXL">XXL</option>
+                                                    </select>
+                                                </div>
+                                
+                                                <div class="w-full md:w-1/3 px-2 mb-4">
+                                                    <label class="block text-gray-700 font-medium mb-1">Quantity</label>
+                                                    <input type="number" name="sizes[0][quantity]" min="0" class="w-full px-3 py-2 border rounded-lg">
+                                                </div>
+                                                <div class="w-full md:w-1/3 px-2 mb-4 flex items-end">
+                                                    <button type="button"
+                                                        class="remove-size bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition">
+                                                        Remove
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="mt-4">
-                                            <button type="button" id="add-size"
-                                                class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
-                                                Add Another Size
-                                            </button>
-                                        </div>    
-                                    </form>
+                                    </div>
+                                    <div class="mt-4">
+                                        <button type="button" id="add-size"
+                                            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                                            Add Another Size
+                                        </button>
+                                    </div>    
                                 </div>
-                                <div  x-show="optionChoosen === 'Aksesoris'" >
+                                <div  x-show="optionChoosen === 'Accessories'" >
                                     <!-- Size and Quantity Fields -->
                                     <div id="sizes-container">
                                         <div class="w-full mb-4">
@@ -533,14 +453,14 @@
                             </button>
                             <button type="submit"
                                 class="flex w-full justify-center rounded-lg border border-blue-700 bg-blue-700 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-800 sm:w-auto">
-                                Save Changes
+                                Submit
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
             <!-- ===== Modal Add Product End ===== -->
-        </main>                
+        </main>                       
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const sizesContainer = document.getElementById('sizes-container');

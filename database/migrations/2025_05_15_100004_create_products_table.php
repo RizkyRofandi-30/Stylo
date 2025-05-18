@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id('product_id');
             $table->string('product_img');
             $table->string('product_name',50);
+            $table->integer('product_price');
             $table->text('product_desc');
-            $table->integer('price');
             $table->enum('category', [
                 Category::Men->value,
                 Category::Women->value,

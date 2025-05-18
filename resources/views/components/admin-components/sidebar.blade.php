@@ -53,6 +53,15 @@
                 </button>
             </div>
         </div>
+        @if (session('success'))
+            <script>
+                swal({
+                    title: "{{ session('success') }}",
+                    icon: "success",
+                    button: "Ok",
+                });
+            </script>
+        @endif
         {{ $slot }}
     </div>
 </div>
@@ -60,4 +69,21 @@
 <script>
     // Initialize Lucide icons
     lucide.createIcons();
+</script>
+<script>
+    document.getElementById('showAlert').addEventListener('click', function(e) {
+        e.preventDefault();
+        swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this imaginary file!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    document.getElementById('logout-form').submit();
+                }
+            });
+    })
 </script>
