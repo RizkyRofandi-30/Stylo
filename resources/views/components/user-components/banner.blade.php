@@ -20,14 +20,6 @@
                     <h4 class="text-xl font-bold">Women</h4>
                     <span class="text-sm">Best Clothes For Women</span>
                 </div>
-                <div
-                    class="absolute inset-0 bg-gray-800 bg-opacity-80 flex flex-col justify-center items-center text-white p-4 opacity-0 group-hover:opacity-100 transition-all duration-300 m-5">
-                    <h4 class="text-xl font-bold">Women</h4>
-                    <p class="text-sm text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <a href="#"
-                        class="mt-2 border border-white px-4 py-2 text-white hover:bg-white hover:text-black transition">Discover
-                        More</a>
-                </div>
             </div>
 
             <!-- Men -->
@@ -37,14 +29,6 @@
                 <div class="absolute inset-0 flex flex-col justify-center items-center text-white p-4">
                     <h4 class="text-xl font-bold">Men</h4>
                     <span class="text-sm">Best Clothes For Men</span>
-                </div>
-                <div
-                    class="absolute inset-0 bg-gray-800 bg-opacity-80 flex flex-col justify-center items-center text-white p-4 opacity-0 group-hover:opacity-100 transition-all duration-300 m-5">
-                    <h4 class="text-xl font-bold">Men</h4>
-                    <p class="text-sm text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <a href="#"
-                        class="mt-2 border border-white px-4 py-2 text-white hover:bg-white hover:text-black transition">Discover
-                        More</a>
                 </div>
             </div>
 
@@ -56,14 +40,6 @@
                     <h4 class="text-xl font-bold">Kids</h4>
                     <span class="text-sm">Best Clothes For Kids</span>
                 </div>
-                <div
-                    class="absolute inset-0 bg-gray-800 bg-opacity-80 flex flex-col justify-center items-center text-white p-4 opacity-0 group-hover:opacity-100 transition-all duration-300 m-5">
-                    <h4 class="text-xl font-bold">Kids</h4>
-                    <p class="text-sm text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <a href="#"
-                        class="mt-2 border border-white px-4 py-2 text-white hover:bg-white hover:text-black transition">Discover
-                        More</a>
-                </div>
             </div>
 
             <!-- Accessories -->
@@ -73,14 +49,6 @@
                 <div class="absolute inset-0 flex flex-col justify-center items-center text-white p-4">
                     <h4 class="text-xl font-bold">Accessories</h4>
                     <span class="text-sm">Best Trend Accessories</span>
-                </div>
-                <div
-                    class="absolute inset-0 bg-gray-800 bg-opacity-80 flex flex-col justify-center items-center text-white p-4 opacity-0 group-hover:opacity-100 transition-all duration-300 m-5">
-                    <h4 class="text-xl font-bold">Accessories</h4>
-                    <p class="text-sm text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <a href="#"
-                        class="mt-2 border border-white px-4 py-2 text-white hover:bg-white hover:text-black transition">Discover
-                        More</a>
                 </div>
             </div>
         </div>

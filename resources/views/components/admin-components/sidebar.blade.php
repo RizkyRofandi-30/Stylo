@@ -13,7 +13,7 @@
     }"
         class="flex flex-col">
         <div class="p-4 flex justify-center items-center">
-            <x-logo href="#" class="items-center"></x-logo>
+            <x-logo href="{{ route('admin') }}" class="items-center" />
         </div>
 
         <nav class="mt-2 flex-1">
@@ -45,7 +45,7 @@
         <div class="bg-gray-800 shadow-sm z-10 lg:hidden">
             <div class="px-4 py-3 flex items-center justify-between">
                 <div class="flex-1 flex justify-between lg:hidden">
-                    <x-logo bref="#"></x-logo>
+                    <x-logo href=""></x-logo>
                 </div>
                 <button x-show="isMobile" @click="isOpen = !isOpen"
                     class="p-1.5 rounded-md flex items-center justify-center bg-gray-800 hover:bg-gray-700 text-gray-200 transition-colors duration-200 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600">

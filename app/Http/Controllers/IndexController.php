@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -13,8 +14,12 @@ class IndexController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        return view('user.index');
+    {   
+        $mens = Product::where('category', 'Men')->get();
+        $womens = Product::where('category','Women')->get();
+        $kids = Product::where('category', 'Kid')->get();
+        $accessories = Product::where('category', 'Accessories')->get();
+        return view('user.index', compact('accessories','kids','mens','womens'));
     }
 
     /**
@@ -75,4 +80,5 @@ class IndexController extends Controller
 
         return redirect()->route('index')->with('success', 'Anda Telah Logout');
     }
+    
 }

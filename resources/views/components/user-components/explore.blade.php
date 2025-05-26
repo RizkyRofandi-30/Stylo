@@ -28,8 +28,8 @@
                 </p>
                 <div>
                     <a href="{{ url('/list-product') }}"
-                        class="mt-2 border border-black px-4 py-2 text-dark hover:bg-black hover:text-white hover:border-white transition">Discover
-                        More</a>
+                        class="mt-2 border border-black px-4 py-2 text-dark hover:bg-black hover:text-white hover:border-white transition">Explore
+                        All Product</a>
                 </div>
             </div>
 

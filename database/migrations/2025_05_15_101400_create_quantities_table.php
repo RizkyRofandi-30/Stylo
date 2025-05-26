@@ -13,8 +13,18 @@ return new class extends Migration
     {
         Schema::create('quantities', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('product_id'); // <-- ADD this line first
+            $table->string('size')->nullable();
+            $table->integer('quantity')->default(0);
             $table->timestamps();
-        });
+        
+            $table->unique(['product_id', 'size']);
+        
+            $table->foreign('product_id')
+                  ->references('product_id')
+                  ->on('products')
+                  ->onDelete('cascade');
+        });        
     }
 
     /**

@@ -47,7 +47,7 @@
                         <!-- Text -->
                         <div>
                             <h2 class="text-lg font-semibold text-gray-800">Total Item</h2>
-                            <p class="text-3xl font-bold text-gray-900">{{ count($products) }}</p>
+                            <p class="text-3xl font-bold text-gray-900">{{ $totalProducts }}</p>
                             <p class="text-sm text-gray-500 mt-1">Compared to $22,032 last month</p>
                         </div>
                     </div>
@@ -127,7 +127,9 @@
                                                 <p class="m-0 font-bold">{{ $product->product_name }}</p>
                                                 <p class="m-0">Price: Rp {{ number_format($product->product_price, 0, ',', '.') }}
                                                 </p>
-                                                <p class="m-0">Total qty:</p>
+                                                @if ($product->dataQuantities->isNotEmpty())
+                                                    <p class="m-0">Total qty: {{ $product->dataQuantities->sum('quantity') }}</p>
+                                                @endif
                                             </div>
                                         </div>
                                     </td>
@@ -144,41 +146,64 @@
                                         <div class="space-y-3">
                                             <!-- Size Buttons -->
                                             <div class="flex flex-wrap gap-2">
-                                                <a href="#size-s"
-                                                    class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
-                                                    S
-                                                </a>
-                                                <a href="#size-m"
-                                                    class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
-                                                    M
-                                                </a>
-                                                <a href="#size-l"
-                                                    class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
-                                                            L
-                                                </a>
-                                                <a href="#size-xl"
-                                                    class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
-                                                    XL
-                                                </a>
-                                                <a href="#size-xxl"
-                                                    class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition">
-                                                    XXL
-                                                </a>
+                                                @if ($product->dataQuantities !== null)
+                                                    @foreach ($product->dataQuantities->filter(fn($dq) => !is_null($dq) && !is_null($dq->size)) as $size)
+                                                        <button
+                                                            type="button"
+                                                            data-size="{{ $size->size }}"
+                                                            data-quantity="{{ $size->quantity }}"
+                                                            data-product-id="{{ $product->id }}"
+                                                            class="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded shadow hover:bg-blue-200 transition"
+                                                            onclick="handleSizeClick(this)"
+                                                        >
+                                                            {{ $size->size }}
+                                                        </button>
+                                                    @endforeach
+                                                @endif
                                             </div>
 
-                                            <!-- Quantity for Size S (can duplicate for others if needed) -->
-                                            <div id="size-s" class="p-2 border rounded bg-slate-50 flex justify-between items-center">
-                                                <h3 class="text-sm font-semibold text-slate-700">Size: S</h3>
-                                                <p class="text-xs text-slate-600">Quantity Available: 10</p>
-                                            </div>
+                                            <!-- Quantity Display (scoped) -->
+                                            @php
+                                                $firstSize = $product->dataQuantities
+                                                    ? $product->dataQuantities->filter(fn($dq) => !is_null($dq) && !is_null($dq->size))->first()
+                                                    : null;
+                                            @endphp
+
+                                            @if ($firstSize)
+                                                <div class="p-2 border rounded bg-slate-50 flex justify-between items-center">
+                                                    <h3 class="text-sm font-semibold text-slate-700">
+                                                        Size: <span class="selected-size">{{ $firstSize->size }}</span>
+                                                    </h3>
+                                                    <p class="text-xs text-slate-600 quantity-display">
+                                                        Quantity Available: {{ $firstSize->quantity }}
+                                                    </p>
+                                                </div>
+
+                                                <input type="hidden" name="quantity" class="selected-quantity" value="{{ $firstSize->quantity }}">
+                                                <input type="hidden" name="size" class="selected-size-input" value="{{ $firstSize->size }}">
+                                            @endif
+
+
+                                            <!-- Hidden input for quantity and product id -->
+                                            <input type="hidden" name="quantity" class="selected-quantity">
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         </div>
-                                    </td>
+                                    </td>                                    
                                     <td class="p-4 border-b border-slate-200 text-center">
-                                        <button data-modal-target="popup-modal-{{ $product->product_id }}" data-modal-toggle="popup-modal-{{ $product->product_id }}"
-                                            class="inline-block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 mx-0.5"
-                                            type="button">
-                                            Delete
-                                        </button>
+                                        <form action="{{ route('admin.get_edit_product', $product->product_id) }}">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->product_id }}"> 
+                                            <button 
+                                                class="inline-block text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-4 py-2 mx-0.5"
+                                                type="submit">
+                                                Edit
+                                            </button>
+                                            <button data-modal-target="popup-modal-{{ $product->product_id }}" data-modal-toggle="popup-modal-{{ $product->product_id }}"
+                                                class="inline-block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 mx-0.5"
+                                                type="button">
+                                                Delete
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 {{-- Start Delete Modal --}}
@@ -224,52 +249,72 @@
                         </tbody>
                     </table>
                 </div>
-                <nav aria-label="Page navigation example" class="mt-4">
-                    <ul class="flex items-center -space-x-px h-10 text-base text-center justify-center ">
-                        <li>
-                            <a href="#"
-                                class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
-                                <span class="sr-only">Previous</span>
-                                <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="M5 1 1 5l4 4" />
-                                </svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">1</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">2</a>
-                        </li>
-                        <li>
-                            <a href="#" aria-current="page"
-                                class="z-10 flex items-center justify-center px-4 h-10 leading-tight text-slate-600 border border-slate-300 bg-slate-200 hover:bg-slate-100 hover:text-slate-700">3</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">4</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">5</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 ">
-                                <span class="sr-only">Next</span>
-                                <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m1 9 4-4-4-4" />
-                                </svg>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+
+                @if ($products->hasPages())
+                    <nav aria-label="Page navigation example" class="mt-4">
+                        <ul class="flex items-center -space-x-px h-10 text-base text-center justify-center ">
+                            <li>
+                                @if ($products->onFirstPage())
+                                    <a href="#"
+                                        class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 cursor-not-allowed">
+                                        <span class="sr-only">Previous</span>
+                                        <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2" d="M5 1 1 5l4 4" />
+                                        </svg>
+                                    </a>
+                                @else
+                                    <a href="{{ $products->previousPageUrl() }}"
+                                        class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
+                                        <span class="sr-only">Previous</span>
+                                        <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2" d="M5 1 1 5l4 4" />
+                                        </svg>
+                                    </a>
+                                @endif
+                            </li>
+                            @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+                                @if ($page == $products->currentPage())
+                                    <li>
+                                        <a href="{{ $url }}" aria-current="page"
+                                            class="z-10 flex items-center justify-center px-4 h-10 leading-tight text-slate-600 border border-slate-300 bg-slate-200 hover:bg-slate-100 hover:text-slate-700">{{ $page }}</a>
+                                    </li>
+                                @else
+                                    <li>
+                                        <a href="{{ $url }}"
+                                            class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">{{ $page }}</a>
+                                    </li>
+                                @endif
+                            @endforeach
+                            <li>
+                                @if ($products->hasMorePages())
+                                    <a href="{{ $products->nextPageUrl() }}"
+                                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
+                                        <span class="sr-only">Next</span>
+                                        <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2" d="m1 9 4-4-4-4" />
+                                        </svg>
+                                    </a>
+                                @else
+                                    <a href="#"
+                                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 cursor-not-allowed">
+                                        <span class="sr-only">Next</span>
+                                        <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2" d="m1 9 4-4-4-4" />
+                                        </svg>
+                                    </a>
+                                @endif
+                            </li>
+                        </ul>
+                    </nav>
+                @endif
             </div>
             <!-- ===== Modal Add Product Start ===== -->
             <div x-show="isProductInfoModal"
@@ -323,6 +368,7 @@
                                         class="block cursor-pointer hover:border-blue-700 border-1 border-dashed rounded-xl bg-white p-10 text-center hover:bg-blue-50 transition">
                                         <div class="flex flex-col items-center space-y-4">
                                             <div
+                                                id="icon-upload"
                                                 class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
                                                 <svg class="fill-current" width="29" height="28"
                                                     viewBox="0 0 29 28" fill="none">
@@ -330,6 +376,7 @@
                                                         d="M14.5 3.917a.75.75 0 0 0-.548.239L8.574 9.532a.75.75 0 0 0 1.06 1.061l4.118-4.116v12.19a.75.75 0 0 0 1.5 0V6.482l4.113 4.111a.75.75 0 0 0 1.06-1.06L15.084 4.194A.75.75 0 0 0 14.5 3.917ZM5.916 18.667a.75.75 0 0 0-1.5 0v3.167A2.25 2.25 0 0 0 6.666 24.084h15.667a2.25 2.25 0 0 0 2.25-2.25v-3.167a.75.75 0 0 0-1.5 0v3.167a.75.75 0 0 1-.75.75H6.666a.75.75 0 0 1-.75-.75v-3.167Z" />
                                                 </svg>
                                             </div>
+                                            <img src="" id="file_img" class="hidden mx-auto mb-4 w-[100px] h-[100px] object-cover rounded-full" alt="">
                                             <p class="text-lg font-semibold text-gray-700">Drag & Drop File Here</p>
                                             <p class="text-sm text-gray-500">Drag and drop your PNG, JPG, WebP, SVG
                                                 images here
@@ -397,7 +444,7 @@
                                 </div>
                             </div>
                             <div class="mt-5">
-                                <div  x-show="optionChoosen === 'Men' || optionChoosen === 'Women' || optionChoosen === 'Kid'" >
+                                <div  x-show="optionChoosen === 'Men' || optionChoosen === 'Women'" >
                                     <!-- Size and Quantity Fields -->
                                     <div id="sizes-container">
                                         <div class="size-group mb-4">
@@ -435,12 +482,12 @@
                                         </button>
                                     </div>    
                                 </div>
-                                <div  x-show="optionChoosen === 'Accessories'" >
+                                <div  x-show="optionChoosen === 'Accessories' || optionChoosen === 'Kid'" >
                                     <!-- Size and Quantity Fields -->
                                     <div id="sizes-container">
                                         <div class="w-full mb-4">
                                             <label class="block text-gray-700 font-medium mb-1">Quantity</label>
-                                            <input type="number" name="sizes[0][quantity]" min="1" class="w-full px-3 py-2 border rounded-lg">
+                                            <input type="number" name="quantity" min="1" class="w-full px-3 py-2 border rounded-lg">
                                         </div>
                                     </div>
                                 </div>
@@ -460,7 +507,29 @@
                 </div>
             </div>
             <!-- ===== Modal Add Product End ===== -->
-        </main>                       
+        </main>  
+        <script>
+            function handleSizeClick(button) {
+                const size = button.dataset.size;
+                const quantity = button.dataset.quantity;
+                const productId = button.dataset.productId;
+
+                // Scope the parent container (up to .space-y-3)
+                const container = button.closest('.space-y-3');
+                if (!container) return;
+
+                // Update the relevant elements within this row
+                const quantityBox = container.querySelector('.quantity-display');
+                const sizeBox = container.querySelector('.selected-size');
+                const hiddenQuantityInput = container.querySelector('.selected-quantity');
+
+                if (quantityBox) quantityBox.textContent = `Quantity Available: ${quantity}`;
+                if (sizeBox) sizeBox.textContent = size;
+                if (hiddenQuantityInput) hiddenQuantityInput.value = quantity;
+
+                console.log(`Product ${productId} | Size: ${size} | Quantity: ${quantity}`);
+            }
+        </script>                             
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const sizesContainer = document.getElementById('sizes-container');
@@ -495,7 +564,24 @@
                     }
                 });
             });
-        </script>    
-            
+        </script>     
+        <script>
+            document.getElementById('product_img').addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                const preview = event.target.closest('label').querySelector('img');
+                const iconUpload = event.target.closest('label').querySelector('#icon-upload');
+                const file_img = document.getElementById('file_img');
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        file_img.classList.remove('hidden'); // Show image when uploaded
+                    };
+                    reader.readAsDataURL(file);
+                    iconUpload.remove();
+                }
+            });
+        </script>            
     </x-admin-components.sidebar>
 </x-layout>
