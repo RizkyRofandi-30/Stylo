@@ -161,14 +161,13 @@
                                 <label for="img_profile"
                                     class="block cursor-pointer hover:border-blue-700 border-1 border-dashed rounded-xl bg-white p-10 text-center hover:bg-blue-50 transition">
                                     <div class="flex flex-col items-center space-y-4">
-                                        <div
-                                            class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
-                                            <svg class="fill-current" width="29" height="28"
-                                                viewBox="0 0 29 28" fill="none">
+                                        <div id="icon-upload" class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
+                                            <svg class="fill-current" width="29" height="28" viewBox="0 0 29 28" fill="none">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
                                                     d="M14.5 3.917a.75.75 0 0 0-.548.239L8.574 9.532a.75.75 0 0 0 1.06 1.061l4.118-4.116v12.19a.75.75 0 0 0 1.5 0V6.482l4.113 4.111a.75.75 0 0 0 1.06-1.06L15.084 4.194A.75.75 0 0 0 14.5 3.917ZM5.916 18.667a.75.75 0 0 0-1.5 0v3.167A2.25 2.25 0 0 0 6.666 24.084h15.667a2.25 2.25 0 0 0 2.25-2.25v-3.167a.75.75 0 0 0-1.5 0v3.167a.75.75 0 0 1-.75.75H6.666a.75.75 0 0 1-.75-.75v-3.167Z" />
                                             </svg>
                                         </div>
+                                        <img src="" id="file_img" class="hidden mx-auto mb-4 w-[100px] h-[100px] object-cover rounded-full" alt="">
                                         <p class="text-lg font-semibold text-gray-700">Drag & Drop File Here</p>
                                         <p class="text-sm text-gray-500">Drag and drop your PNG, JPG, WebP, SVG
                                             images here
@@ -307,6 +306,25 @@
             </div>
         </div>
         <!-- ===== Modal Edit Address Start ===== -->
+
+        <script>
+            document.getElementById('img_profile').addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                const preview = event.target.closest('label').querySelector('img');
+                const iconUpload = event.target.closest('label').querySelector('#icon-upload');
+                const file_img = document.getElementById('file_img');
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        file_img.classList.remove('hidden'); // Show image when uploaded
+                    };
+                    reader.readAsDataURL(file);
+                    iconUpload.remove();
+                }
+            });
+        </script>
 
     </main>
     <!-- ===== Profile Content End ===== -->

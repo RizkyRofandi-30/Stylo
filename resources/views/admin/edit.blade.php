@@ -144,14 +144,14 @@
                                                         <div class="w-full md:w-1/3 px-2 mb-4 flex items-end">
                                                             <button type="button"
                                                                 class="remove-size bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition"
-                                                                data-id="{{ $size->id }}">>
+                                                                data-id="{{ $size->id }}">
                                                                 Remove
                                                             </button>
-                                                            <input type="hidden" name="removed_size_ids" id="removed_size_ids" value="">
                                                         </div>
                                                     </div>
                                                 </div>
                                             @endforeach
+                                            <input type="hidden" name="removed_size_ids" id="removed_size_ids" value="">
                                         </div>
                                         <div class="mt-4">
                                             <button type="button" id="add-size"
