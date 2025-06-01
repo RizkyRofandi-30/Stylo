@@ -20,26 +20,21 @@
                     @foreach ($mens as $men)    
                         <li class="card-item swiper-slide">
                             <!-- Product Card -->
-                            <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                                <div class="relative group">
-                                    <img src="{{ asset('storage/' . $men->product_img) }}" alt="Air Force 1 X"
-                                        class="w-full h-150 xl:h-80 lg:h-80 md:h-80 sm:h-160 object-cover">
-                                    <div
-                                        class="absolute inset-0 backdrop-blur-sm flex justify-center items-center opacity-0 group-hover:opacity-100 transition">
-                                        <ul class="flex space-x-4">
-                                            <li><a href="{{ route('user.single_product', ['id' => $men->product_id]) }}" class="text-white text-lg"><i
-                                                        class="fa fa-eye"></i></a>
-                                            </li>
-                                            <li><a href="single-product.html" class="text-white text-lg"><i
-                                                        class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
+                            <a href="{{ route('user.single_product', ['id' => $men->product_id]) }}" class="block">
+                                <div class="bg-white shadow-md rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-3 group">
+                                    <div class="relative">
+                                        <img src="{{ asset('storage/' . $men->product_img) }}" alt="Air Force 1 X"
+                                            class="w-full h-150 xl:h-80 lg:h-80 md:h-80 sm:h-160 object-cover">
+                                        <div
+                                            class="absolute inset-0 backdrop-blur-sm flex justify-center items-center opacity-0 group-hover:opacity-100 transition">
+                                        </div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h4 class="text-xl font-bold">{{ Str::limit($men->product_name,28)}}</h4>
+                                        <span class="text-gray-400 font-bold">Rp {{ number_format($men->product_price, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
-                                <div class="p-4">
-                                    <h4 class="text-xl font-bold">{{ $men->product_name }}</h4>
-                                    <span class="text-gray-400 font-bold">Rp {{ number_format($men->product_price, 0, ',', '.') }}</span>
-                                </div>
-                            </div>
+                            </a>
                         </li>
                     @endforeach
                 </ul>
@@ -81,26 +76,21 @@
                     @foreach ($womens as $women)
                         <li class="card-item swiper-slide">
                             <!-- Product Card -->
-                            <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                                <div class="relative group">
-                                    <img src="{{ asset('storage/' . $women->product_img) }}" alt="Air Force 1 X"
-                                        class="w-full h-150 xl:h-80 lg:h-80 md:h-80 sm:h-160 object-cover">
-                                    <div
-                                        class="absolute inset-0 backdrop-blur-sm flex justify-center items-center opacity-0 group-hover:opacity-100 transition">
-                                        <ul class="flex space-x-4">
-                                            <li><a href="{{ route('user.single_product', ['id' => $women->product_id]) }}" class="text-white text-lg"><i
-                                                        class="fa fa-eye"></i></a>
-                                            </li>
-                                            <li><a href="single-product.html" class="text-white text-lg"><i
-                                                        class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
+                            <a href="{{ route('user.single_product', ['id' => $women->product_id]) }}" class="block">
+                                <div class="bg-white shadow-md rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-3 group">
+                                    <div class="relative">
+                                        <img src="{{ asset('storage/' . $women->product_img) }}" alt="Air Force 1 X"
+                                            class="w-full h-150 xl:h-80 lg:h-80 md:h-80 sm:h-160 object-cover">
+                                        <div
+                                            class="absolute inset-0 backdrop-blur-sm flex justify-center items-center opacity-0 group-hover:opacity-100 transition">
+                                        </div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h4 class="text-xl font-bold">{{ Str::limit($women->product_name,28) }}</h4>
+                                        <span class="text-gray-400 font-bold">Rp {{ number_format($women->product_price, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
-                                <div class="p-4">
-                                    <h4 class="text-xl font-bold">{{ $women->product_name }}</h4>
-                                    <span class="text-gray-400 font-bold">Rp {{ number_format($women->product_price, 0, ',', '.') }}</span>
-                                </div>
-                            </div>
+                            </a>
                         </li>
                     @endforeach
                 </ul>
@@ -143,26 +133,22 @@
                     @foreach ($kids as $kid)
                         <li class="card-item swiper-slide">
                             <!-- Product Card -->
-                            <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                                <div class="relative group">
-                                    <img src="{{ asset('storage/' . $kid->product_img) }}" alt="Air Force 1 X"
-                                        class="w-full h-150 xl:h-80 lg:h-80 md:h-80 sm:h-160 object-cover">
-                                    <div
-                                        class="absolute inset-0 backdrop-blur-sm flex justify-center items-center opacity-0 group-hover:opacity-100 transition">
-                                        <ul class="flex space-x-4">
-                                            <li><a href="{{ route('user.single_product', ['id' => $kid->product_id]) }}" class="text-white text-lg"><i
-                                                        class="fa fa-eye"></i></a>
-                                            </li>
-                                            <li><a href="single-product.html" class="text-white text-lg"><i
-                                                        class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
+                            <a href="{{ route('user.single_product', ['id' => $kid->product_id]) }}" class="block">
+                                <div class="bg-white shadow-md rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-3 group">
+                                    <div class="relative">
+                                        <img src="{{ asset('storage/' . $kid->product_img) }}" alt="Air Force 1 X"
+                                            class="w-full h-150 xl:h-80 lg:h-80 md:h-80 sm:h-160 object-cover">
+                                        <div
+                                            class="absolute inset-0 backdrop-blur-sm flex justify-center items-center opacity-0 group-hover:opacity-100 transition">
+                                        </div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h4 class="text-xl font-bold">{{ Str::limit($kid->product_name,28)  }}</h4>
+                                        <span class="text-gray-400 font-bold">Rp {{ number_format($kid->product_price, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
-                                <div class="p-4">
-                                    <h4 class="text-xl font-bold">{{ $kid->product_name }}</h4>
-                                    <span class="text-gray-400 font-bold">Rp {{ number_format($kid->product_price, 0, ',', '.') }}</span>
-                                </div>
-                            </div>
+                            </a>
+
                         </li>
                     @endforeach
                 </ul>
@@ -204,26 +190,21 @@
                     @foreach ($accessories as $accessory)
                         <li class="card-item swiper-slide">
                             <!-- Product Card -->
-                            <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                                <div class="relative group">
-                                    <img src="{{ asset('storage/' . $accessory->product_img) }}" alt="Air Force 1 X"
-                                        class="w-full h-150 xl:h-80 lg:h-80 md:h-80 sm:h-160 object-cover">
-                                    <div
-                                        class="absolute inset-0 backdrop-blur-sm flex justify-center items-center opacity-0 group-hover:opacity-100 transition">
-                                        <ul class="flex space-x-4">
-                                            <li><a href="{{ route('user.single_product', ['id' => $accessory->product_id]) }}" class="text-white text-lg"><i
-                                                        class="fa fa-eye"></i></a>
-                                            </li>
-                                            <li><a href="single-product.html" class="text-white text-lg"><i
-                                                        class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
+                            <a href="{{ route('user.single_product', ['id' => $accessory->product_id]) }}" class="block">
+                                <div
+                                    class="bg-white shadow-md rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-3 group">
+                                    <div class="relative">
+                                        <img src="{{ asset('storage/' . $accessory->product_img) }}" alt="Air Force 1 X"
+                                            class="w-full h-150 xl:h-80 lg:h-80 md:h-80 sm:h-160 object-cover">
+                                        <div
+                                            class="absolute inset-0 backdrop-blur-sm flex justify-center items-center opacity-0 group-hover:opacity-100 transition"></div>
                                     </div>
-                                </div>
-                                <div class="p-4">
-                                    <h4 class="text-xl font-bold">{{ $accessory->product_name}}</h4>
-                                    <span class="text-gray-400 font-bold">Rp {{ number_format($accessory->product_price, 0, ',', '.') }}</span>
-                                </div>
-                            </div>
+                                    <div class="p-4">
+                                        <h4 class="text-xl font-bold">{{ Str::limit($accessory->product_name,28)}}</h4>
+                                        <span class="text-gray-400 font-bold">Rp {{ number_format($accessory->product_price, 0, ',', '.') }}</span>
+                                    </div>
+                                </div>                        
+                            </a>
                         </li>
                     @endforeach
                 </ul>
@@ -247,7 +228,9 @@
     </section>
     <!-- ***** Accessory Area Ends ***** -->
 
-
+    
     <x-user-components.explore></x-user-components.explore>
     <x-user-components.footer></x-user-components.footer>
 </x-layout>
+
+

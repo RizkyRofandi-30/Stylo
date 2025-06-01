@@ -8,9 +8,8 @@ use GuzzleHttp\Promise\Create;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class AdminProductController extends Controller
 {
-    private $checkout = []; 
     public function addProduct(Request $request)
     {
         try {
@@ -52,7 +51,7 @@ class ProductController extends Controller
             Product::create($product_data);
 
             // Logic for Accessories and Kids
-            if (in_array($validatedData['category'], ['Accesories', 'Kid'])) {
+            if (in_array($validatedData['category'], ['Accessories', 'Kid'])) {
                 $dataValidate = [
                     'quantity' => 'required|numeric|min:1',
                 ];
@@ -116,22 +115,6 @@ class ProductController extends Controller
         $products = Product::paginate(5);
         $totalProducts = Product::count();
         return view('admin.dashboard', compact('products', 'totalProducts'));
-    }
-
-    public function listProduct(){
-        $products = Product::paginate(8);
-        return view('user.list-product', compact('products'));
-    }
-
-    public function listProductByCategory($category) {
-        $products = Product::where('category', $category)->paginate(8);
-        return view('user.list-product', compact('products'));
-    }
-
-    public function singleProduct($id)
-    {
-        $products = Product::where('product_id', $id)->get();
-        return view('user.single-product', compact('products'));
     }
 
     public function getEditProduct($id){
@@ -235,9 +218,4 @@ class ProductController extends Controller
                 ->withInput();
         }
     }
-
-    public function checkout() {
-        // 
-    }
-
 }

@@ -10,26 +10,21 @@
             <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                 @foreach ($products as $product)
                     <!-- Product Card -->
-                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                        <div class="relative group">
-                            <img src="{{ asset('storage/' . $product->product_img) }}" alt="Air Force 1 X"
-                                class="w-full h-150 xl:h-80 lg:h-80 md:h-80 sm:h-160 object-cover">
-                            <div
-                                class="absolute inset-0 backdrop-blur-sm flex justify-center items-center opacity-0 group-hover:opacity-100 transition">
-                                <ul class="flex space-x-4">
-                                    <li><a href="{{ route('user.single_product', ['id' => $product->product_id]) }}" class="text-white text-lg"><i
-                                                class="fa fa-eye"></i></a>
-                                    </li>
-                                    <li><a href="single-product.html" class="text-white text-lg"><i
-                                                class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
+                    <a href="{{ route('user.single_product', ['id' => $product->product_id]) }}" class="block">
+                        <div class="bg-white shadow-md rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-3 group">
+                            <div class="relative">
+                                <img src="{{ asset('storage/' . $product->product_img) }}" alt="Air Force 1 X"
+                                    class="w-full h-150 xl:h-80 lg:h-80 md:h-80 sm:h-160 object-cover">
+                                <div
+                                    class="absolute inset-0 backdrop-blur-sm flex justify-center items-center opacity-0 group-hover:opacity-100 transition">
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h4 class="text-xl font-bold">{{ $product->product_name}}</h4>
+                                <span class="text-gray-400 font-bold">Rp {{ number_format($product->product_price, 0, ',', '.') }}</span>
                             </div>
                         </div>
-                        <div class="p-4">
-                            <h4 class="text-xl font-bold">{{ $product->product_name }}</h4>
-                            <span class="text-gray-400 font-bold">Rp {{ number_format($product->product_price, 0, ',', '.') }}</span>
-                        </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         </div>

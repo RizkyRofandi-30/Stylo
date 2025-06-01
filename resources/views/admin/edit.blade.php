@@ -32,7 +32,7 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div class="custom-scrollbar h-[450px] overflow-y-auto px-2" >
-                            <div x-data="{ isOptionSelected: true, optionChoosen: '{{ $product->category }}' }" x-init="optionChoosen = '{{ $product->category }}'">
+                            <div x-data="{ isOptionSelected: true, optionChoosen: '{{ $product->category }}' }">
                                 <div class="items-center justify-center">
                                     <div class="w-full max-w-xl mb-5">
                                         <label class="mb-1.5 block text-sm font-medium text-gray-700">

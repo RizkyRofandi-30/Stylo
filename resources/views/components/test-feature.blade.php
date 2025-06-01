@@ -697,15 +697,15 @@
 
 
 @php
-    // Set current step: 1 = Checkout, 2 = Package Order, 3 = Sent, 4 = Delivered
-    $currentStep = 3;
-    $steps = [
-        1 => 'Checkout',
-        2 => 'Package Order',
-        3 => 'Sent',
-        4 => 'Delivered',
-        5 => 'Completed',
-    ];
+// Set current step: 1 = Checkout, 2 = Package Order, 3 = Sent, 4 = Delivered
+$currentStep = 3;
+$steps = [
+    1 => 'Checkout',
+    2 => 'Package Order',
+    3 => 'Sent',
+    4 => 'Delivered',
+    5 => 'Completed',
+];
 @endphp
 
 <div class="w-full max-w-4xl mx-auto mt-8 px-4">
@@ -840,3 +840,43 @@
         </label>
     </div>
 </div>
+
+
+<!-- Main Content -->
+<main class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
+    <div class="text-center w-full max-w-4xl mx-auto">
+        <!-- Empty Cart Icon -->
+        <div class="mb-8">
+            <div class="mx-auto w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-shopping-cart text-5xl text-gray-400"></i>
+            </div>
+        </div>
+
+        <!-- Heading -->
+        <h1 class="text-3xl font-bold text-gray-900 mb-4">Your cart is empty</h1>
+
+        <!-- Description -->
+        <p class="text-lg text-gray-600 mb-8 max-w-md mx-auto">
+            Looks like you haven't added any items to your cart yet. Start shopping to fill it up!
+        </p>
+
+        <!-- Call to Action Buttons -->
+        <div class="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
+            <a href="#"
+                class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-sm">
+                <i class="fas fa-shopping-bag mr-2"></i>
+                Continue Shopping
+            </a>
+
+            <a href="#"
+                class="inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                <i class="fas fa-th-large mr-2"></i>
+                Browse Categories
+            </a>
+        </div>
+    </div>
+</main>
+
+
+
+

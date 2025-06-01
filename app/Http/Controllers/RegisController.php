@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Role;
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
@@ -56,6 +57,8 @@ class RegisController extends Controller
                 'password' => Hash::make($validatedData['password']),
                 'role' => Role::from('User')
             ]);
+            
+            Cart::create(['user_id' => $user->id]);
 
             Auth::login($user);
 
