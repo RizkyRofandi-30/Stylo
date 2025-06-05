@@ -7,15 +7,14 @@
             <div class="grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-2 gap-6 p-4">
                 <!-- Card 1 -->
                 <div class="bg-white rounded-xl shadow-md p-6 transition hover:shadow-lg">
-                    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
+                    <div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
                         <!-- Icon -->
                         <div class="bg-green-100 p-4 rounded-md border border-green-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="text-green-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="text-green-600">
                                 <path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" />
-                                <path
-                                    d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
+                                <path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
                                 <path d="m2 16 6 6" />
                                 <circle cx="16" cy="9" r="2.9" />
                                 <circle cx="6" cy="5" r="3" />
@@ -24,20 +23,19 @@
                         <!-- Text -->
                         <div>
                             <h2 class="text-lg font-semibold text-gray-800">Total Revenue</h2>
-                            <p class="text-3xl font-bold text-gray-900">$24,780</p>
-                            <p class="text-sm text-gray-500 mt-1">Compared to $22,032 last month</p>
+                            <p class="text-2xl font-bold text-gray-900">Rp {{ number_format($revenue, 0, ',', '.') }}</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Card 2 -->
                 <div class="bg-white rounded-xl shadow-md p-6 transition hover:shadow-lg">
-                    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
+                    <div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
                         <!-- Icon -->
                         <div class="bg-amber-100 p-4 rounded-md border border-amber-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="text-amber-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="text-amber-600">
                                 <path
                                     d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
                                 <path d="m3.3 7 8.7 5 8.7-5" />
@@ -46,21 +44,20 @@
                         </div>
                         <!-- Text -->
                         <div>
-                            <h2 class="text-lg font-semibold text-gray-800">Total Item</h2>
-                            <p class="text-3xl font-bold text-gray-900">{{ $totalProducts }}</p>
-                            <p class="text-sm text-gray-500 mt-1">Compared to $22,032 last month</p>
+                            <h2 class="text-lg font-semibold text-gray-800">Total Product</h2>
+                            <p class="text-2xl font-bold text-gray-900">{{ $totalProducts }}</p>
                         </div>
                     </div>
                 </div>
-
-                <!-- Card 3 -->
+                
+                {{-- Card 3 --}}
                 <div class="bg-white rounded-xl shadow-md p-6 transition hover:shadow-lg">
-                    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
+                    <div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
                         <!-- Icon -->
                         <div class="bg-indigo-100 p-4 rounded-md border border-indigo-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="text-indigo-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="text-indigo-600">
                                 <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" />
                                 <path d="M14 8H8" />
                                 <path d="M16 12H8" />
@@ -70,10 +67,9 @@
                         <!-- Text -->
                         <div>
                             <h2 class="text-lg font-semibold text-gray-800">Order Total</h2>
-                            <p class="text-3xl font-bold text-gray-900">45</p>
-                            <p class="text-sm text-gray-500 mt-1">Compared to $22,032 last month</p>
+                            <p class="text-2xl font-bold text-gray-900">{{ $totalItem }}</p>
                         </div>
-                    </div>
+                    </div>      
                 </div>
             </div>
             <div

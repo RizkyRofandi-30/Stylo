@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserProductController;
 use App\Http\Controllers\RegisController;
 use App\Http\Controllers\SettingsController;
@@ -16,17 +17,8 @@ Route::get('/test', function () {
     return view('user.test-page');
 });
 
-Route::get('/package', function () {
-    return view('admin.package-user');
-});
-
-
 Route::get('/checkout', function(){
     return view('user.checkout');
-});
-
-Route::get('/vardump',function (){
-    //
 });
 
 Route::get('/clear-checkout', function () {
@@ -34,10 +26,24 @@ Route::get('/clear-checkout', function () {
     return redirect()->back();
 });
 
+// Route::get('/payment', [PaymentController::class, 'postPayment']);
+
+Route::get('/packet', [AdminProductController::class,'showPacket'])->name('admin.showPacket');
+Route::post('/packet/{packet_id}',[AdminProductController::class,'updatePacketStatus'])->name('admin.update_packet_status');
+Route::delete('/packet/{packet_id}',[AdminProductController::class,'deletePacketItem'])->name('admin.delete_packet');
+
+Route::get('/payment/success', [PaymentController::class, 'paymentSuccess'])->name('payment.finish');
+Route::get('/payment/error', [PaymentController::class, 'paymentError'])->name('payment.error');
+Route::get('/payment/pending', [PaymentController::class, 'paymentPending'])->name('payment.error');
+
+
 Route::middleware('autentikasi')->group(function () {
-    Route::get('/order-history', function () {
-        return view('user.order-history');
+    Route::get('/order-progress', function () {
+        return view('user.order-progress');
     });
+
+    Route::get('/order-progress/{user_id}', [UserProductController::class, 'orderProgress']);
+
     Route::get('/cart', function () {
         return view('user.cart');
     });
@@ -55,6 +61,8 @@ Route::middleware('autentikasi')->group(function () {
 
     Route::post('/checkoutCart/{user_id}/{cart_id}',[UserProductController::class, 'postCheckoutCart'])->name('user.post_checkout_cart');
     Route::get('/checkoutCart/{user_id}/{cart_id}',[UserProductController::class, 'getCheckoutCart'])->name('user.get_checkout_cart');
+
+    Route::post('/payment/{user_id}',[PaymentController::class, 'postPayment'])->name(  'user.postPayment');
 
     Route::get('/settings', [SettingsController::class, 'show']);
     Route::get('/settings/{id}', [SettingsController::class, 'show'])->name('settings');

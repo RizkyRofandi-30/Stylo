@@ -36,33 +36,40 @@
 
                 {{-- Right Column - Checkout Form --}}
                 <div class="md:px-8 flex-1">
-                    <form method="#" action="#" class="space-y-6">
+                    <form method="POST" action="{{ route('user.postPayment', Auth::user()->id) }}" class="space-y-6" id="checkout-form"
+                        enctype="multipart/form-data">
                         @csrf
+                        @foreach ($checkoutItems as $index => $item)
+                            <input type="hidden" name="items[{{ $index }}][product_id]" value="{{ $item['product']->id }}">
+                            <input type="hidden" name="items[{{ $index }}][size]" value="{{ $item['size'] }}">
+                            <input type="hidden" name="items[{{ $index }}][quantity]" value="{{ $item['quantity'] }}">
+                            <input type="hidden" name="items[{{ $index }}][price]" value="{{ $item['product']->product_price }}">
+                        @endforeach
+                        <input type="hidden" name="total_price" value="{{ $totalPrice }}">
                         <div>
                             <label for="email" class="text-[1rem] font-medium text-gray-800 mb-1">Email</label>
-                            <input type="email" id="email" name="email" placeholder="{{ Auth::user()->email }}"
+                            <input type="email" id="email" name="email" value="{{ Auth::user()->email }}"
                                 class="w-full border rounded px-3 py-2 border-gray-200 hover:border-blue-700 outline-none mt-0.5" />
                         </div>
-
                         <div>
                             <label for="phone" class="text-[1rem] font-medium text-gray-800 mb-1">Phone number</label>
-                            <input type="tel" name="phone" id="phone" placeholder="{{ Auth::user()->phone }}"
+                            <input type="tel" name="phone" id="phone" value="{{ Auth::user()->phone }}"
                                 class="w-full border rounded px-3 py-2 border-gray-200 outline-none hover:border-blue-700 mt-0.5" />
                         </div>
-
                         <div>
                             <label for="address" class="text-[1rem] font-medium text-gray-800 mb-1">Address</label>
-                            <textarea name="address" id="address" placeholder="{{ Auth::user()->address }}" rows="4"
-                                class="w-full border rounded px-3 py-2 border-gray-200 outline-none hover:border-blue-700 mt-0.5"></textarea>
+                            <textarea name="address" id="address" rows="4"
+                                class="w-full border rounded px-3 py-2 border-gray-200 outline-none hover:border-blue-700 mt-0.5">{{ Auth::user()->address }}</textarea>
                         </div>
                         <div>
-                            <label for="zipCode" class="text-[1rem] font-medium text-gray-800 mb-1">Zip code</label>
-                            <input type="text" id="zipCode" name="zip_code" placeholder="{{ Auth::user()->postal_code }}"
+                            <label for="postal_code" class="text-[1rem] font-medium text-gray-800 mb-1">Postal Code</label>
+                            <input type="text" id="postal_code" name="postal_code" value="{{ Auth::user()->postal_code }}"
                                 class="w-full border rounded px-3 py-2 border-gray-200 outline-none hover:border-blue-500" />
                         </div>
-                        <button type="submit" class="w-full bg-blue-700 text-white py-3 rounded-lg hover:border-blue-700 mb-2">
-                            Bayar Rp {{ number_format($totalPrice, 0, ',', '.') }}
-                        </button>
+                        <button type="button" id="pay-button"
+                            class="w-full bg-blue-700 text-white py-3 rounded-lg hover:border-blue-700 mb-2">
+                            Bayar
+                        </button>           
                     </form>
                 </div>
             </div>
@@ -70,7 +77,39 @@
     @else
         <p>Tidak ada item di checkout</p>
     @endif
+    
+    
+    <script type="text/javascript">
+        document.getElementById('pay-button').addEventListener('click', function (e) {
+            // Disable button to prevent double click
+            e.target.disabled = true;
 
+            window.snap.pay('{{ $paymentToken }}', {
+                onSuccess: function (result) {
+                    // Optional: Add payment details to the form as hidden inputs
+                    var form = document.getElementById('checkout-form');
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'transaction_id';
+                    input.value = result.transaction_id;
+                    form.appendChild(input);
+
+                    // Submit form after successful payment
+                    form.submit();
+                },
+                onPending: function (result) {
+                    window.location.href = '/payment/pending';
+                },
+                onError: function (result) {
+                    window.location.href = '/payment/error';
+                },
+                onClose: function () {
+                    // Re-enable button if payment popup is closed without completing
+                    e.target.disabled = false;
+                }
+            });
+        });
+    </script>
 </x-layout>
 
 

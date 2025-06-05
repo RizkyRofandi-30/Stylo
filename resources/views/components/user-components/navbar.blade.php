@@ -86,9 +86,9 @@
 
                     <div x-show="open" @click.outside="open = false"
                         class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none">
-                        <a href="{{ url('/order-history') }}" class="block px-4 py-2 text-sm text-gray-700">Order
-                            History</a>
                         @if (Auth::check())
+                            <a href="{{ url('/order-progress/' . Auth::user()->id) }}" class="block px-4 py-2 text-sm text-gray-700">Order
+                                Progress</a>
                             <a href="{{ url('/settings/' . Auth::user()->id) }}"
                                 class="block px-4 py-2 text-sm text-gray-700">Settings</a>
                             <a href="#" class="block px-4 py-2 text-sm text-gray-700" id="showAlert">Logout</a>
@@ -97,6 +97,8 @@
                                 @csrf
                             </form>
                         @else
+                            <a href="{{ url('/order-progress') }}" class="block px-4 py-2 text-sm text-gray-700">Order
+                                Progress</a>
                             <a href="{{ url('/settings') }}" class="block px-4 py-2 text-sm text-gray-700">Settings</a>
                             <a href="{{ url('/login') }}" class="block px-4 py-2 text-sm text-gray-700">Sign In</a>
                         @endif

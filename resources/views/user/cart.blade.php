@@ -9,8 +9,8 @@
                         <div class="space-y-6 mb-2">
                             @foreach ($carts->items as $item)
                                 @php
-        $cart_id = $item->cart_id;
-        $size = $item->size;
+                                    $cart_id = $item->cart_id;
+                                    $size = $item->size;
                                 @endphp    
                                 <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm md:p-6">
                                     <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">

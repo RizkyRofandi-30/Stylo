@@ -22,7 +22,7 @@
                 <i data-lucide="home" class="w-5 h-5"></i>
                 <span>Home</span>
             </a>
-            <a href="/package"
+            <a href="/packet"
                 class="px-4 py-3 flex items-center space-x-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">
                 <i data-lucide="mail" class="w-5 h-5"></i>
                 <span>Paket User</span>

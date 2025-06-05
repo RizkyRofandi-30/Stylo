@@ -14,6 +14,10 @@
     {{-- Lucid Icons --}}
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
+    {{-- Midtrans --}}
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="SB-Mid-client-RgbUUX2FboWhSDiQ"></script>
+        
     <!-- Additional CSS Files -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -49,6 +53,8 @@
                 });
         })
     </script>
+
+    
 </body>
 
 </html>

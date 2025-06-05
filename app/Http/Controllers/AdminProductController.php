@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Quantity;
-use GuzzleHttp\Promise\Create;
-use Illuminate\Support\Facades\Storage;
+use App\Enums\PacketStatus;
+use App\Models\PaymentItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminProductController extends Controller
 {
@@ -114,8 +116,16 @@ class AdminProductController extends Controller
     {
         $products = Product::paginate(5);
         $totalProducts = Product::count();
-        return view('admin.dashboard', compact('products', 'totalProducts'));
+
+        $totalItem = PaymentItem::select('product_id', 'size')
+            ->distinct()
+            ->count();
+
+        $revenue = Payment::sum('total_price');
+
+        return view('admin.dashboard', compact('products', 'totalProducts', 'totalItem', 'revenue'));
     }
+
 
     public function getEditProduct($id){
         $products = Product::where('product_id', $id)->get();
@@ -134,11 +144,10 @@ class AdminProductController extends Controller
         }
     }
     
-    function editProduct(Request $request, $id)
+    public function editProduct(Request $request, $id)
     {
         try {
             $product = Product::find($id);
-       
             $validate = [
                 'product_img' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:5120',
                 'product_name' => 'nullable|string',
@@ -218,4 +227,38 @@ class AdminProductController extends Controller
                 ->withInput();
         }
     }
+
+    public function showPacket() {
+        $packets = PaymentItem::with('payment') // eager load related payment
+            ->paginate(5);
+    
+        $no = ($packets->currentPage() - 1) * $packets->perPage() + 1;
+    
+        return view('admin.packet', compact('packets', 'no'));
+    }
+
+    public function deletePacketItem($product_id)
+    {
+        $product = PaymentItem::findOrFail($product_id); // sesuaikan modelnya
+        $product->delete();
+
+        return redirect()->back()->with('success', 'Packet berhasil dihapus');
+    }
+
+    public function updatePacketStatus(Request $request, $id)
+    {
+        // Validate the status input
+        $validated = $request->validate([
+            'PacketStatus' => ['required', 'in:' . implode(',', array_column(PacketStatus::cases(), 'value'))],
+        ]);
+
+        // Find the packet and update status
+        $packet = PaymentItem::findOrFail($id);
+        $packet->packet_status = $validated['PacketStatus'];
+        $packet->save();
+
+        return redirect()->back()->with('success', 'Status paket berhasil diperbarui.');
+    }
+
+    
 }

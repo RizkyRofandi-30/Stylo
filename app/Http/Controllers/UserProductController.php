@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Payment;
+use App\Models\PaymentItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
-class UserProductController extends Controller
+class UserProductController extends PaymentController
 {
     protected string $checkout_array;
     public function listProduct(){
@@ -155,7 +157,7 @@ class UserProductController extends Controller
     
 
     public function getCheckout($user_id) {
-        $checkoutArray = session()->get('checkout_array', []);
+        $checkoutArray = session()->get('checkout_array', []);  
         $checkoutItems = collect($checkoutArray)->map(function ($item) {
             $product = Product::find($item['product_id']);
             return [
@@ -167,12 +169,15 @@ class UserProductController extends Controller
 
         $totalPrice = $checkoutItems->reduce(function ($total, $item) {
             return $total + ($item['quantity'] * $item['product']->product_price);
-        }, 0);        
-
+        }, 0);
+        
+        $paymentToken = $this->getPayment($user_id, $checkoutItems, $totalPrice);
+        
         return view('user.checkout', [
             'user_id' => $user_id,
             'checkoutItems' => $checkoutItems,
-            'totalPrice' => $totalPrice
+            'totalPrice' => $totalPrice,
+            'paymentToken' => $paymentToken
         ]);
     }
 
@@ -247,10 +252,33 @@ class UserProductController extends Controller
             return $total + ($item['quantity'] * $item['product']->product_price);
         }, 0);
 
+        $paymentToken = $this->getPayment($user_id, $checkoutItems, $totalPrice);
+
         return view('user.checkout', [
             'user_id' => $user_id,
             'checkoutItems' => $checkoutItems,
-            'totalPrice' => $totalPrice
+            'totalPrice' => $totalPrice,
+            'paymentToken' => $paymentToken
         ]);
+    }
+
+    public function orderProgress($user_id){
+        $orders = Payment::where('user_id', $user_id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $statusColors = [
+            'Menunggu_Konfirmasi' => 'bg-blue-100 text-blue-800',
+            'Sedang_Diproses' => 'bg-yellow-100 text-yellow-800',
+            'Di_Perjalanan' => 'bg-green-100 text-green-800',
+            'Di_Batalkan' => 'bg-red-100 text-red-800'
+        ];
+
+        foreach ($orders as $order) {
+            foreach ($order->paymentItems as $item) {
+                $item->color_class = $statusColors[$item->packet_status] ?? 'bg-gray-100 text-gray-800';
+            }
+        }
+        
+        return view('user.order-progress', compact('orders'));
     }
 }
