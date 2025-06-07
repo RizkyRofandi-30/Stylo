@@ -44,9 +44,6 @@
                             <input type="hidden" name="items[{{ $index }}][size]" value="{{ $item['size'] }}">
                             <input type="hidden" name="items[{{ $index }}][quantity]" value="{{ $item['quantity'] }}">
                             <input type="hidden" name="items[{{ $index }}][price]" value="{{ $item['product']->product_price }}">
-                            @if (!empty($item['cart_id']))
-                                <input type="hidden" name="items[{{ $index }}][cart_id]" value="{{ $item['cart_id'] }}">
-                            @endif
                         @endforeach
                         <input type="hidden" name="total_price" value="{{ $totalPrice }}">
                         <div>

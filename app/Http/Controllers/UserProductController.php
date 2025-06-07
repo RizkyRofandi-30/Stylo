@@ -197,11 +197,8 @@ class UserProductController extends PaymentController
 
         $product = Product::findOrFail($product_id);
         $category = strtolower($product->category);
-
-        // Determine if size should be considered based on category
         $sizeRequired = in_array($category, ['men', 'women']);
-        
-        // Try to find an existing cart item
+
         $query = CartItem::where('cart_id', $cart->cart_id)
             ->where('product_id', $product_id);
 
@@ -225,29 +222,51 @@ class UserProductController extends PaymentController
                 'size' => $size,
             ]);
         }
+
+        $cartItems = CartItem::where('cart_id', $cart->cart_id)->get();
+        $checkoutArray = $cartItems->map(function ($item) {
+            return [
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'size' => $item->size,
+                'cart_id' => $item->id,
+            ];
+        })->toArray();
+
+        session()->put('checkout_array', $checkoutArray);
+
         return redirect()->route('user.get_checkout_cart', ['user_id' => $user_id, 'cart_id' => $cart_id]);
     }
 
+
     public function getCheckoutCart($user_id, $cart_id) 
     {
-        // Get the user's cart and verify ownership
         $cart = Cart::where('user_id', $user_id)->findOrFail($cart_id);
-        
-        // Load cart items with their associated products
+
         $cartItems = CartItem::with('product')
             ->where('cart_id', $cart->cart_id)
             ->get();
-        
-        // Transform cart items to match the checkout items format
+
+        $checkoutArray = $cartItems->map(function ($item) {
+            return [
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'size' => $item->size,
+                'cart_id' => $item->id,
+            ];
+        })->toArray();
+
+        // ✅ Update session
+        session()->put('checkout_array', $checkoutArray);
+
         $checkoutItems = $cartItems->map(function ($item) {
             return [
-                'product' => $item->product, // Contains name, image, price, etc.
+                'product' => $item->product,
                 'quantity' => $item->quantity,
                 'size' => $item->size,
             ];
         });
 
-        // Calculate total price
         $totalPrice = $checkoutItems->reduce(function ($total, $item) {
             return $total + ($item['quantity'] * $item['product']->product_price);
         }, 0);
@@ -258,10 +277,10 @@ class UserProductController extends PaymentController
             'user_id' => $user_id,
             'checkoutItems' => $checkoutItems,
             'totalPrice' => $totalPrice,
-            'paymentToken' => $paymentToken
+            'paymentToken' => $paymentToken,
         ]);
     }
-
+    
     public function orderProgress($user_id){
         $orders = Payment::where('user_id', $user_id)
             ->orderBy('created_at', 'desc')

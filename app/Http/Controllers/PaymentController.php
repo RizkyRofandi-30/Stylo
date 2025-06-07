@@ -54,7 +54,7 @@ class PaymentController extends ParentController
             'email' => 'required|email',
             'phone' => 'required|string',
             'address' => 'required|string',
-            'postal_code' => 'required|string',
+            'postal_code' => 'required|string'
         ]);
     
         $checkoutArray = session()->get('checkout_array', []);  
@@ -102,11 +102,6 @@ class PaymentController extends ParentController
                 // Update quantity if item exists
                 $quantities->quantity -= $item['quantity'];
                 $quantities->save();
-            }
-
-            if (!empty($item['cart_id'])) {
-                $cartsItem = CartItem::findOrFail($item['cart_id']);
-                $cartsItem->delete();
             }
         }
     

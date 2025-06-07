@@ -31,11 +31,15 @@
 
         <!-- Logout button at the bottom -->
         <div class="mt-auto p-4">
-            <a href="/logout"
+            <a href="#" id="showAlert"
                 class="px-4 py-3 flex items-center space-x-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md">
                 <i data-lucide="log-out" class="w-5 h-5"></i>
                 <span>Logout</span>
             </a>
+            <form id="logout-form" action="{{ route('index.logout') }}" method="POST"
+                style="display: none;">
+                @csrf
+            </form>
         </div>
     </div>
 
@@ -75,7 +79,6 @@
         e.preventDefault();
         swal({
                 title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this imaginary file!",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,

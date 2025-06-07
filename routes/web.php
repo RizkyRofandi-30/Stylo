@@ -30,7 +30,7 @@ Route::get('/clear-checkout', function () {
 
 Route::get('/packet', [AdminProductController::class,'showPacket'])->name('admin.showPacket');
 Route::post('/packet/{packet_id}',[AdminProductController::class,'updatePacketStatus'])->name('admin.update_packet_status');
-// Route::delete('/packet/{packet_id}',[AdminProductController::class,'deletePacketItem'])->name('admin.delete_packet');
+Route::delete('/packet/{packet_id}',[AdminProductController::class,'deletePacketItem'])->name('admin.delete_packet');
 
 Route::get('/payment/success', [PaymentController::class, 'paymentSuccess'])->name('payment.finish');
 Route::get('/payment/error', [PaymentController::class, 'paymentError'])->name('payment.error');
@@ -48,6 +48,10 @@ Route::middleware('autentikasi')->group(function () {
         return view('user.cart');
     });
 
+    Route::get('/admin', [AdminProductController::class, 'showProduct'])->name('admin');
+    Route::delete('/admin/{id}', [AdminProductController::class, 'deleteProduct'])->name('admin.delete_product');
+    Route::post('/admin', [AdminProductController::class, 'addProduct'] )->name('admin.add_product');
+
     Route::get('/cart/{user_id}', [UserProductController::class, 'showCart'])->name('user.show_cart');
     Route::post('/cart/{user_id}', [UserProductController::class, 'addToCart'])->name('user.add_to_cart');
     Route::delete('/cart/{user_id}/{product_id}',[UserProductController::class,'deleteItemCart'])->name('user.delete_item_cart');
@@ -62,6 +66,8 @@ Route::middleware('autentikasi')->group(function () {
     Route::post('/checkoutCart/{user_id}/{cart_id}',[UserProductController::class, 'postCheckoutCart'])->name('user.post_checkout_cart');
     Route::get('/checkoutCart/{user_id}/{cart_id}',[UserProductController::class, 'getCheckoutCart'])->name('user.get_checkout_cart');
 
+    Route::post('/checkout/cart/{user_id}/{cart_id}',);
+
     Route::post('/payment/{user_id}',[PaymentController::class, 'postPayment'])->name(  'user.postPayment');
 
     Route::get('/settings', [SettingsController::class, 'show']);
@@ -74,9 +80,6 @@ Route::get('/list-product/{category}', [UserProductController::class, 'listProdu
 Route::get('/edit/{id}', [AdminProductController::class, 'getEditProduct'])->name('admin.get_edit_product');
 Route::post('/edit/{id}', [AdminProductController::class, 'editProduct'])->name('admin.post_edit_product');
 Route::get('/single-product/{id}', [UserProductController::class, 'singleProduct'])->name('user.single_product');
-Route::get('/admin', [AdminProductController::class, 'showProduct'])->name('admin');
-Route::delete('/admin/{id}', [AdminProductController::class, 'deleteProduct'])->name('admin.delete_product');
-Route::post('/admin', [AdminProductController::class, 'addProduct'] )->name('admin.add_product');
 Route::get('/', [IndexController::class, 'index' ])->name('index');
 Route::post('/', [IndexController::class, 'logout'])->name('index.logout');
 Route::get('/login', [LoginController::class, 'create'])->name('login');
