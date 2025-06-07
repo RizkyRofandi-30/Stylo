@@ -11,11 +11,6 @@
     
             <!-- Heading -->
             <h1 class="text-3xl font-bold text-gray-900 mb-4">Payment Pending</h1>
-    
-            <!-- Description -->
-            <p class="text-lg text-gray-600 mb-8 max-w-md mx-auto">
-                We're processing your payment. Please wait while we confirm your transaction. This may take a few moments.
-            </p>
         </div>
     </section>
 </x-layout>

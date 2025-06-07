@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CartItem;
 use App\Models\Payment;
 use App\Models\PaymentItem;
 use App\Models\User;
 use App\Models\Product;
-
+use App\Models\Quantity;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as ParentController;
 
@@ -89,6 +90,24 @@ class PaymentController extends ParentController
                 'quantity' => $item['quantity'],
                 'price_item' => $item['product']->product_price,
             ]);
+
+            $quantities = Quantity::where('product_id',$item['product']->product_id )
+                            ->where('size',$item['size'])
+                            ->when(isset($item['size']), function($query) use ($item) {
+                                return $query->where('size', $item['size']);
+                            })
+                            ->first();;
+
+            if ($quantities) {
+                // Update quantity if item exists
+                $quantities->quantity -= $item['quantity'];
+                $quantities->save();
+            }
+
+            if (!empty($item['cart_id'])) {
+                $cartsItem = CartItem::findOrFail($item['cart_id']);
+                $cartsItem->delete();
+            }
         }
     
         // Optional: clear session after order placed

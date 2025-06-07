@@ -67,8 +67,7 @@
                                 </td>
                                 <td class="p-4 border-b border-slate-200">
                                     <p class="block text-sm text-slate-800">
-                                        {{ $item->created_at ? $item->created_at->format('F j, Y') : '-' }}
-                                    </p>
+                                        {{ $item->created_at ? $item->created_at->format('F j, Y') : '-' }}</p>
                                 </td>
                                 <td class="p-4 border-b border-slate-200">
                                     <p class="block text-sm text-slate-800">
@@ -83,7 +82,7 @@
                                             type="button">
                                             Edit
                                         </button>
-                                        @if ($item->packet_status === 'Paket_Sampai')
+                                        @if ($item->packet_status === 'Di_Batalkan')
                                             <button data-modal-target="popup-modal" data-modal-toggle="popup-modal"
                                                 data-id="{{ $item->id }}"
                                                 class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center mx-0.5"
@@ -154,16 +153,6 @@
                                             class="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-500 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-white hover:text-white hover:bg-blue-600 peer-checked:bg-blue-600">
                                             <div class="block">
                                                 <div class="w-full text-lg font-semibold">Di Batalkan</div>
-                                            </div>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <input type="radio" id="Paket_Sampai" name="PacketStatus" value="Paket_Sampai"
-                                            class="hidden peer">
-                                        <label for="Paket_Sampai"
-                                            class="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-500 rounded-lg cursor-pointer peer-checked:border-blue-600 peer-checked:text-white hover:text-white hover:bg-blue-600 peer-checked:bg-blue-600">
-                                            <div class="block">
-                                                <div class="w-full text-lg font-semibold">Paket Sampai</div>
                                             </div>
                                         </label>
                                     </li>

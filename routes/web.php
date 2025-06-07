@@ -30,7 +30,7 @@ Route::get('/clear-checkout', function () {
 
 Route::get('/packet', [AdminProductController::class,'showPacket'])->name('admin.showPacket');
 Route::post('/packet/{packet_id}',[AdminProductController::class,'updatePacketStatus'])->name('admin.update_packet_status');
-Route::delete('/packet/{packet_id}',[AdminProductController::class,'deletePacketItem'])->name('admin.delete_packet');
+// Route::delete('/packet/{packet_id}',[AdminProductController::class,'deletePacketItem'])->name('admin.delete_packet');
 
 Route::get('/payment/success', [PaymentController::class, 'paymentSuccess'])->name('payment.finish');
 Route::get('/payment/error', [PaymentController::class, 'paymentError'])->name('payment.error');

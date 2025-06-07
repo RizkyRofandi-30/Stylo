@@ -14,7 +14,7 @@
                 <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{{ $product->product_name }}</h1>
                 <p class="text-3xl tracking-tight text-gray-900">Rp {{ number_format($product->product_price, 0, ',', '.') }}</p>
                 <p class="overflow-auto h-20 mt-2">
-                    {{ $product->product_desc }}
+                    {!! nl2br(e($product->product_desc)) !!}
                 </p>
             </div>
 

@@ -5,8 +5,8 @@
             <img src="{{ asset('assets/images/left-banner-image.jpg') }}" class="w-full h-full object-cover"
                 alt="Left Banner">
             <div class="absolute inset-0 flex flex-col justify-center items-center text-white p-4">
-                <h4 class="text-4xl font-bold">We Are Stylo</h4>
-                <span class="text-lg">Awesome, clean & creative HTML5 Template</span>
+                <h4 class="text-4xl font-bold">Stylo</h4>
+                <span class="text-lg">New Brand New Style</span>
             </div>
         </div>
 

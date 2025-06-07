@@ -7,29 +7,23 @@
         <div class="flex flex-col lg:flex-row gap-8">
             <!-- Left Content -->
             <div class="lg:w-1/2 space-y-6">
-                <h2 class="text-3xl font-bold text-gray-800">Explore Our Products</h2>
+                <h2 class="text-3xl font-bold text-gray-800">Temukan Produk Terbaik Kami</h2>
                 <p class="text-lg text-gray-600">
-                    You are allowed to use this HexaShop HTML CSS template. You can feel free to modify or
-                    edit this layout. You can convert this template as any kind of eCommerce CMS theme as you wish.
+                    Nikmati pengalaman berbelanja yang mudah dan menyenangkan melalui koleksi produk pilihan kami. Dengan desain menarik dan
+                    kualitas terpercaya, kami hadir untuk memenuhi kebutuhan Anda.
                 </p>
                 <div class="bg-gray-200 border-l-4 border-gray-600 p-4 italic text-gray-700 flex items-center space-x-3">
                     <i class="fa fa-quote-left text-2xl text-gray-500"></i>
-                    <p>You are not allowed to redistribute this template ZIP file on any other website.</p>
+                    <p>Kami tidak hanya mengejar tren namun menciptakan gaya yang baru</p>
                 </div>
                 <p class="text-gray-600">
-                    There are 5 pages included in this HexaShop Template, and we are providing it to you for
-                    absolutely free of charge at our TemplateMo website. There are web development costs for us.
-                </p>
-                <p class="text-gray-600">
-                    If this template is beneficial for your website or business, please kindly
-                    <a href="https://paypal.me/templatemo" target="_blank" class="text-blue-600 underline">
-                        support us
-                    </a> via PayPal.
+                    Jelajahi beragam kategori produk yang telah kami siapkan secara lengkap dan gratis melalui platform kami. Kami
+                    menghadirkan tampilan yang ramah pengguna dan mudah diakses, tanpa biaya tambahan.
                 </p>
                 <div>
                     <a href="{{ url('/list-product') }}"
-                        class="mt-2 border border-black px-4 py-2 text-dark hover:bg-black hover:text-white hover:border-white transition">Explore
-                        All Product</a>
+                        class="mt-2 border border-black px-4 py-2 text-dark hover:bg-black hover:text-white hover:border-white transition">
+                        Jelajahi Produk Kami</a>
                 </div>
             </div>
 

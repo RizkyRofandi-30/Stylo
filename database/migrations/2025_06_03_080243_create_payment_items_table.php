@@ -25,7 +25,8 @@ return new class extends Migration
                 PacketStatus::Menunggu_Konfirmasi->value,
                 PacketStatus::Sedang_Diproses->value,
                 PacketStatus::Di_Perjalanan->value,
-                PacketStatus::Di_Batalkan->value
+                PacketStatus::Di_Batalkan->value,
+                PacketStatus::Paket_Sampai->value
             ])->default(PacketStatus::Menunggu_Konfirmasi->value);
             $table->timestamps();
 

@@ -10,7 +10,7 @@
         <div class="container mx-auto px-4">
             <div class="max-w-3xl">
                 <h2 class="text-3xl font-bold text-gray-800">Men's Latest</h2>
-                <p class="text-gray-600 mt-2">Details to details is what makes Hexashop different from the other themes.
+                <p class="text-gray-600 mt-2">A new collection for your needs
                 </p>
             </div>
         </div>
@@ -30,7 +30,7 @@
                                         </div>
                                     </div>
                                     <div class="p-4">
-                                        <h4 class="text-xl font-bold">{{ Str::limit($men->product_name,28)}}</h4>
+                                        <h4 class="text-xl font-bold">{{ Str::limit($men->product_name, 28)}}</h4>
                                         <span class="text-gray-400 font-bold">Rp {{ number_format($men->product_price, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
@@ -66,7 +66,7 @@
         <div class="container mx-auto px-4">
             <div class="max-w-3xl">
                 <h2 class="text-3xl font-bold text-gray-800">Women's Latest</h2>
-                <p class="text-gray-600 mt-2">Details to details is what makes Hexashop different from the other themes.
+                <p class="text-gray-600 mt-2">A new collection for your needs
                 </p>
             </div>
         </div>
@@ -86,7 +86,7 @@
                                         </div>
                                     </div>
                                     <div class="p-4">
-                                        <h4 class="text-xl font-bold">{{ Str::limit($women->product_name,28) }}</h4>
+                                        <h4 class="text-xl font-bold">{{ Str::limit($women->product_name, 28) }}</h4>
                                         <span class="text-gray-400 font-bold">Rp {{ number_format($women->product_price, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
@@ -123,7 +123,7 @@
         <div class="container mx-auto px-4">
             <div class="max-w-3xl">
                 <h2 class="text-3xl font-bold text-gray-800">Kid's Latest</h2>
-                <p class="text-gray-600 mt-2">Details to details is what makes Hexashop different from the other themes.
+                <p class="text-gray-600 mt-2">A new collection for your needs
                 </p>
             </div>
         </div>
@@ -143,7 +143,7 @@
                                         </div>
                                     </div>
                                     <div class="p-4">
-                                        <h4 class="text-xl font-bold">{{ Str::limit($kid->product_name,28)  }}</h4>
+                                        <h4 class="text-xl font-bold">{{ Str::limit($kid->product_name, 28)  }}</h4>
                                         <span class="text-gray-400 font-bold">Rp {{ number_format($kid->product_price, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
@@ -180,7 +180,7 @@
         <div class="container mx-auto px-4">
             <div class="max-w-3xl">
                 <h2 class="text-3xl font-bold text-gray-800">Accessories Latest</h2>
-                <p class="text-gray-600 mt-2">Details to details is what makes Hexashop different from the other themes.
+                <p class="text-gray-600 mt-2">A new collection for your needs
                 </p>
             </div>
         </div>
@@ -200,7 +200,7 @@
                                             class="absolute inset-0 backdrop-blur-sm flex justify-center items-center opacity-0 group-hover:opacity-100 transition"></div>
                                     </div>
                                     <div class="p-4">
-                                        <h4 class="text-xl font-bold">{{ Str::limit($accessory->product_name,28)}}</h4>
+                                        <h4 class="text-xl font-bold">{{ Str::limit($accessory->product_name, 28)}}</h4>
                                         <span class="text-gray-400 font-bold">Rp {{ number_format($accessory->product_price, 0, ',', '.') }}</span>
                                     </div>
                                 </div>                        

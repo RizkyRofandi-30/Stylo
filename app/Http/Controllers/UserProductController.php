@@ -84,7 +84,7 @@ class UserProductController extends PaymentController
             }
         }
 
-        return redirect()->route('user.show_cart', ['user_id' => $user_id])->with('success', 'Product added to cart successfully!');
+        return redirect()->route('user.show_cart', ['user_id' => $user_id])->with('success', 'Produk Berhasil Ditambahkan!');
     }
 
     public function deleteItemCart(Request $request, $user_id, $product_id)
@@ -108,7 +108,7 @@ class UserProductController extends PaymentController
 
         if ($cartItem) {
             $cartItem->delete();
-            return redirect()->route('user.show_cart', ['user_id' => $user_id])->with('success', 'Item removed from cart.');
+            return redirect()->route('user.show_cart', ['user_id' => $user_id])->with('success', 'Produk Telah Di Hapus');
         }
 
         return redirect()->back()->with('error', 'Item not found in cart.');
@@ -267,10 +267,11 @@ class UserProductController extends PaymentController
             ->orderBy('created_at', 'desc')
             ->get();
         $statusColors = [
-            'Menunggu_Konfirmasi' => 'bg-blue-100 text-blue-800',
-            'Sedang_Diproses' => 'bg-yellow-100 text-yellow-800',
-            'Di_Perjalanan' => 'bg-green-100 text-green-800',
-            'Di_Batalkan' => 'bg-red-100 text-red-800'
+            'Menunggu_Konfirmasi' => 'bg-blue-200 text-blue-800',
+            'Sedang_Diproses' => 'bg-yellow-200 text-yellow-800',
+            'Di_Perjalanan' => 'bg-gray-200 text-gray-800',
+            'Di_Batalkan' => 'bg-red-200 text-red-800',
+            'Paket_Sampai' => 'bg-green-200 text-green-800'
         ];
 
         foreach ($orders as $order) {
