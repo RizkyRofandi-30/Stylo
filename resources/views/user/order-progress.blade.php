@@ -4,7 +4,7 @@
         {{-- Order Progress Start --}}
         <div class="container mx-auto px-4 py-8 max-w-7xl">
             <div class="flex justify-between items-center mb-8">
-                <h1 class="text-2xl font-bold text-gray-800">Order Progress</h1>
+                <h1 class="text-2xl font-bold text-gray-800">My order</h1>
             </div>
             <div class="space-y-4 mt-4">
                 @foreach ($orders as $order)

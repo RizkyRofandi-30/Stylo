@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use App\Models\CartItem;
 use App\Models\Payment;
-use App\Models\PaymentItem;
 use App\Models\Product;
+use App\Models\CartItem;
+use App\Models\Quantity;
+use App\Models\PaymentItem;
 use Illuminate\Http\Request;
 
 class UserProductController extends PaymentController
@@ -114,33 +115,58 @@ class UserProductController extends PaymentController
         return redirect()->back()->with('error', 'Item not found in cart.');
     }
 
-    public function postCheckout(Request $request, $user_id) {
+    public function postCheckout(Request $request, $user_id)
+    {
         $product_id = $request->input('product_id');
-    
+
         $validateCheckout = [
             'quantity' => 'required|numeric|min:1',
             'size' => 'nullable'
         ];
         $validatedData = $request->validate($validateCheckout);
-    
-        // Get existing checkout array from session or start a new one
+
         $checkoutArray = session()->get('checkout_array', []);
-    
-        // Check if item already exists (same product_id and size)
+
         $found = false;
+
         foreach ($checkoutArray as &$item) {
             if (
                 $item['product_id'] == $product_id &&
                 ($item['size'] ?? null) == ($validatedData['size'] ?? null)
             ) {
-                $item['quantity'] += $validatedData['quantity']; // just add quantity
+                // Get total requested quantity (existing + new)
+                $totalQuantity = $item['quantity'] + $validatedData['quantity'];
+
+                // Check available quantity
+                $availableQuantity = Quantity::where('product_id', $product_id)
+                    ->when(isset($validatedData['size']), function ($query) use ($validatedData) {
+                        return $query->where('size', $validatedData['size']);
+                    })
+                    ->value('quantity');
+
+                if ($totalQuantity > $availableQuantity) {
+                    // return redirect()->back()->withErrors(['quantity' => 'Stok tidak mencukupi']);
+                    return redirect()->route('user.single_product', ['id' => $product_id])->with('error', 'Stok tidak mencukupi');
+                }
+
+                $item['quantity'] = $totalQuantity;
                 $found = true;
                 break;
             }
         }
-    
-        // If not found, add new item
+
         if (!$found) {
+            // Check if requested quantity is available before adding new item
+            $availableQuantity = Quantity::where('product_id', $product_id)
+                ->when(isset($validatedData['size']), function ($query) use ($validatedData) {
+                    return $query->where('size', $validatedData['size']);
+                })
+                ->value('quantity');
+
+            if ($validatedData['quantity'] > $availableQuantity) {
+                return redirect()->route('user.single_product', ['id' => $product_id])->with('error', 'Stok tidak mencukupi');
+            }
+
             $checkoutArray[] = [
                 'user_id' => $user_id,
                 'product_id' => $product_id,
@@ -148,12 +174,12 @@ class UserProductController extends PaymentController
                 'size' => $validatedData['size'] ?? null,
             ];
         }
-    
-        // Store back into session
+
         session(['checkout_array' => $checkoutArray]);
-    
+
         return redirect()->route('user.get_checkout', ['user_id' => $user_id]);
-    }    
+    }
+   
     
 
     public function getCheckout($user_id) {

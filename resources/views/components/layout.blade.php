@@ -32,6 +32,15 @@
             });
         </script>
     @endif
+    @if (session('error'))
+        <script>
+            swal({
+                title: "{{ session('error') }}",
+                icon: "error",
+                button: "Ok",
+            });
+        </script>
+    @endif
     {{ $slot }}
 
     @vite(['resources/js/carousel.js'])

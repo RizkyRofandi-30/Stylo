@@ -15,6 +15,7 @@ class AdminProductController extends Controller
     public function addProduct(Request $request)
     {
         try {
+            // Validasi dasar produk
             $validate = [
                 'product_img' => 'required|image|mimes:jpeg,png,jpg,svg|max:5120',
                 'product_name' => 'required|string',
@@ -37,51 +38,26 @@ class AdminProductController extends Controller
             ];
 
             $validatedData = $request->validate($validate, $message_validate);
-            $product_data = [
-                'product_name' => $validatedData['product_name'],
-                'product_price' => $validatedData['product_price'],
-                'product_desc' => $validatedData['product_desc'],
-                'category' => $validatedData['category'],
-            ];
 
-
-            if ($request->hasFile('product_img')) {
-                $img_path = $request->file('product_img')->store('product', 'public');
-                $product_data['product_img'] = $img_path;
-            }
-
-            Product::create($product_data);
-
-            // Logic for Accessories and Kids
+            // Validasi tambahan berdasarkan kategori
             if (in_array($validatedData['category'], ['Accessories', 'Kid'])) {
                 $dataValidate = [
                     'quantity' => 'required|numeric|min:1',
                 ];
-
                 $dataMessages = [
                     'quantity.required' => 'Jumlah Wajib Diisi',
                     'quantity.numeric' => 'Jumlah harus berupa angka',
                     'quantity.min' => 'Jumlah Minimal 1',
                 ];
-
                 $data = $request->validate($dataValidate, $dataMessages);
-
-                $product = Product::latest()->first();
-                Quantity::create([
-                    'product_id' => $product->product_id,
-                    'size' => null,
-                    'quantity' => $data['quantity'],
-                ]);
             }
 
-            // Logic for Men, Women
             if (in_array($validatedData['category'], ['Men', 'Women'])) {
                 $fashionValidate = [
                     'sizes' => 'required|array|min:1',
                     'sizes.*.size' => 'required|string|in:XS,S,M,L,XL,XXL',
                     'sizes.*.quantity' => 'required|numeric|min:1',
                 ];
-
                 $fashionMessages = [
                     'sizes.required' => 'Setidaknya satu ukuran harus ditambahkan.',
                     'sizes.*.size.required' => 'Ukuran wajib diisi.',
@@ -90,27 +66,62 @@ class AdminProductController extends Controller
                     'sizes.*.quantity.numeric' => 'Jumlah harus berupa angka.',
                     'sizes.*.quantity.min' => 'Jumlah minimal adalah 1.',
                 ];
-
                 $fashionData = $request->validate($fashionValidate, $fashionMessages);
+            }
 
-                $product = Product::latest()->first();
+            // Setelah semua validasi aman, baru buat produk
+            $product_data = [
+                'product_name' => $validatedData['product_name'],
+                'product_price' => $validatedData['product_price'],
+                'product_desc' => $validatedData['product_desc'],
+                'category' => $validatedData['category'],
+            ];
 
+            if ($request->hasFile('product_img')) {
+                $img_path = $request->file('product_img')->store('product', 'public');
+                $product_data['product_img'] = $img_path;
+            }
+
+            $product = Product::create($product_data);
+
+            // Buat data quantity berdasarkan kategori
+            if (in_array($validatedData['category'], ['Accessories', 'Kid'])) {
+                Quantity::create([
+                    'product_id' => $product->product_id,
+                    'size' => null,
+                    'quantity' => $data['quantity'],
+                ]);
+            }
+
+            if (in_array($validatedData['category'], ['Men', 'Women'])) {
                 foreach ($fashionData['sizes'] as $entry) {
-                    Quantity::create([
-                        'product_id' => $product->product_id,
-                        'size' => $entry['size'],
-                        'quantity' => $entry['quantity'],
-                    ]);
+                    $existing = Quantity::where('product_id', $product->product_id)
+                                        ->where('size', $entry['size'])
+                                        ->first();
+            
+                    if ($existing) {
+                        $existing->quantity += $entry['quantity'];
+                        $existing->save();
+                    } else {
+                        Quantity::create([
+                            'product_id' => $product->product_id,
+                            'size' => $entry['size'],
+                            'quantity' => $entry['quantity'],
+                        ]);
+                    }
                 }
             }
+            
+
             return redirect()->back()->with('success', 'Produk Berhasil Ditambahkan');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()
                 ->with('isProductInfoModal', true)
-                ->withErrors($e->validator)  // This sends the actual validation errors dynamically
+                ->withErrors($e->validator)
                 ->withInput();
         }
     }
+
 
     public function showProduct()
     {
